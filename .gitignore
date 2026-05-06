@@ -1,0 +1,17 @@
+# Folder z paczkami
+node_modules/
+
+# Plik z hasłami i URLami
+.env
+
+# Raporty z testów
+playwright-report/
+test-results/
+blob-report/
+playwright-snapshots/
+
+# Foldery generowane przez BDD
+.features-gen/
+
+# Pliki systemowe
+.DS_Store
