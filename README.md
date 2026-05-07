@@ -116,6 +116,20 @@ Plik `src/utils/testConfig.ts` działa jako inteligentny łącznik. Odczytuje on
 
 ---
 
+## 📊 Raportowanie (Allure Report)
+
+Framework integruje się z **Allure Report**, dostarczając szczegółowe, wizualne raporty z przebiegu testów.
+
+### ⚙️ Funkcje raportu:
+* **Automatyczne Artefakty**: Screenshoty i nagrania wideo są dołączane automatycznie do raportu w przypadku błędu (`on-failure`).
+* **Trace Viewer**: Integracja z Playwright Trace Viewer pozwala na analizę krok po kroku na osi czasu.
+* **Kategoryzacja**: Możliwość tagowania testów (Severity, Feature, Story) dla lepszej przejrzystości.
+
+### 🚀 Jak przeglądać raporty?
+Po zakończeniu testów wykonaj poniższą komendę, aby wygenerować i otworzyć interaktywny raport w przeglądarce:
+
+---
+
 ## ♿ Dostępność (a11y)
 
 Framework jest **a11y-ready**. Posiada strukturę przygotowaną pod audyty dostępności cyfrowej:
