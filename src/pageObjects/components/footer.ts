@@ -1,4 +1,4 @@
-import { BasePageComponent } from '../base.pageComponent';
+import { BasePageComponent } from '../BasePageComponent';
 
 export default class Footer extends BasePageComponent {
   readonly links = {

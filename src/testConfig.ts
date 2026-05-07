@@ -4,7 +4,8 @@ import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 export const testConfig = {
-  qa: process.env.QA_URL || `https://magento.softwaretestingboard.com/`,
+  baseurl: process.env.BASE_URL || ``,
+  qa: process.env.QA_URL || ``,
   dev: process.env.DEV_URL || ``,
   prod: process.env.PROD_URL || ``,
 
@@ -12,8 +13,8 @@ export const testConfig = {
   devApi: ``,
   prodApi: ``,
 
-  username: process.env.USER_NAME || `domyslny@email.com`,
-  password: process.env.PASSWORD || `domyslneHaslo`,
+  username: process.env.USER_NAME || `admin`,
+  password: process.env.PASSWORD || `1234`,
 
   waitForElement: process.env.WAIT_FOR_ELEMENT ? parseInt(process.env.WAIT_FOR_ELEMENT) : 10000,
 

@@ -1,4 +1,4 @@
-import { BasePage } from '../base.page';
+import { BasePage } from '../BasePage';
 import CarouselCards from '../components/carouselCards';
 import ProductCards from '../components/productCards';
 

@@ -1,21 +1,19 @@
-import HomePage from '../pages/home.page';
 import { test as base } from '@playwright/test';
-import SearchPage from '../pages/search.page';
+import { LoginPage } from '../pages/loginPage';
+// Tu będziesz importować kolejne strony w miarę ich tworzenia / Here you will import additional pages as you create them
 
-export type PageObjects = {
-  homePage: HomePage;
-  searchPage: SearchPage;
+// Definiujemy typy dla naszych fixtures / Define types for our fixtures
+type MyFixtures = {
+  loginPage: LoginPage;
 };
 
-export const test = base.extend<PageObjects>({
-  homePage: async ({ page }, use) => {
-    const homePage = new HomePage(page);
-    await use(homePage);
-  },
-  searchPage: async ({ page }, use) => {
-    const searchPage = new SearchPage(page);
-    await use(searchPage);
+// Rozszerzamy bazowy test o nasze obiekty / Extend the base test with our page objects
+export const test = base.extend<MyFixtures>({
+  loginPage: async ({ page }, use) => {
+    // Tworzymy nową instancję, przekazując samo 'page' (nasz BasePage i WebActions zajmą się resztą) / We create a new instance, passing just the 'page' (our BasePage and WebActions will handle the rest)
+    const loginPage = new LoginPage(page);
+    await use(loginPage);
   },
 });
 
-export { expect, Page, Locator, Response } from '@playwright/test';
+export { expect } from '@playwright/test';

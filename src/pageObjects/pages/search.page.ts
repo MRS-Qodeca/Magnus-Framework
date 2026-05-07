@@ -1,4 +1,4 @@
-import { BasePage } from '../base.page';
+import { BasePage } from '../BasePage';
 import ProductCards from '../components/productCards';
 import { escape } from 'querystring';
 

@@ -8,13 +8,15 @@ import { Workbook } from 'exceljs';
 import { testConfig } from '../testConfig';
 import * as pdfjslib from 'pdfjs-dist-es5';
 
+/* NOTE: BrowserContext zakomentowany do czasu implementacji testów multi-sesyjnych / 
+NOTE: BrowserContext is commented out until the implementation of multi-session tests */
 export class WebActions {
   readonly page: Page;
-  readonly context: BrowserContext;
+  /*readonly context: BrowserContext;*/
 
-  constructor(page: Page, context: BrowserContext) {
+  constructor(page: Page /*context: BrowserContext*/) {
     this.page = page;
-    this.context = context;
+    /*this.context = context;*/
   }
 
   /**
@@ -25,6 +27,22 @@ export class WebActions {
     return new Promise(function (resolve) {
       setTimeout(resolve, time);
     });
+  }
+
+  /**
+   * Wpisuje tekst w pole formularza. /
+   * Enters text into a form field.
+   */
+  async enterValue(locator: string, value: string): Promise<void> {
+    await this.page.fill(locator, value);
+  }
+
+  /**
+   * Klika w element zdefiniowany przez lokator. /
+   * Clicks on an element defined by the locator.
+   */
+  async clickElement(locator: string): Promise<void> {
+    await this.page.click(locator);
   }
 
   /**
