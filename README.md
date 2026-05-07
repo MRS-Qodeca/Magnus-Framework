@@ -127,12 +127,19 @@ Framework integruje się z **Allure Report**, dostarczając szczegółowe, wizua
 
 ### 🚀 Jak przeglądać raporty?
 Po zakończeniu testów wykonaj poniższą komendę, aby wygenerować i otworzyć interaktywny raport w przeglądarce:
+npx allure serve allure-results
 
 ---
 
-## ♿ Dostępność (a11y)
+## ♿ Testy Dostępności (A11y)
 
-Framework jest **a11y-ready**. Posiada strukturę przygotowaną pod audyty dostępności cyfrowej:
-- **Silnik Axe:** Gotowość do integracji z `@axe-core/playwright` w celu automatycznego wykrywania naruszeń standardów WCAG.
-- **Rygorystyczne lokatory:** Promujemy używanie ról i tekstów (User-Centric Locators), co naturalnie wspiera testowanie dostępności.
+Framework posiada zintegrowany silnik **Axe-core**, który pozwala na automatyczną weryfikację zgodności aplikacji ze standardami **WCAG** (Web Content Accessibility Guidelines).
 
+### 🔍 Co jest sprawdzane?
+* Poprawność hierarchii nagłówków (H1-H6).
+* Kontrast kolorów tekstu względem tła.
+* Obecność atrybutów `alt` dla obrazów.
+* Dostępność elementów dla czytników ekranu i nawigacji klawiaturą.
+
+### 🛠️ Przykład użycia:
+Audyt można uruchomić na dowolnym etapie testu (np. po otwarciu modala lub przejściu do koszyka), co pozwala na wyłapanie błędów dostępności w dynamicznych elementach UI.
