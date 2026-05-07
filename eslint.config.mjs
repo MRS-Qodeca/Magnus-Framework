@@ -19,7 +19,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
-  // To wyklucza foldery z raportami, żeby ESLint ich nie sprawdzał
+  // To wyklucza foldery z raportami, żeby ESLint ich nie sprawdzał  / This excludes report folders so that ESLint does not check them
   {
     ignores: ['node_modules/', 'playwright-report/', 'test-results/', '.features-gen/'],
   }
