@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import dotenv from 'dotenv';
 import path from 'path';
+import { testConfig } from '././src/testConfig';
 
 /**
  * Read environment variables from file.
@@ -22,8 +23,11 @@ const bddDir = defineBddConfig({
  */
 export default defineConfig({
   // Using both standard test files and generated files from features
-  testDir: bddDir,
-  testMatch: ['**/*.spec.ts', '**/*.features-gen/*.ts'],
+  testDir: './',
+  testMatch: [
+    'tests/specs/**/*.spec.ts', // Twoje zwykłe testy (jak successful-login)
+    '.features-gen/**/*.ts', // Testy wygenerowane z Gherkina
+  ],
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -48,8 +52,11 @@ export default defineConfig({
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: testConfig.baseURL,
+    httpCredentials: {
+      username: testConfig.username,
+      password: testConfig.password,
+    },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',

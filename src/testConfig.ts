@@ -4,7 +4,7 @@ import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 export const testConfig = {
-  baseurl: process.env.BASE_URL || ``,
+  baseURL: process.env.BASE_URL || ``,
   qa: process.env.QA_URL || ``,
   dev: process.env.DEV_URL || ``,
   prod: process.env.PROD_URL || ``,
@@ -14,7 +14,7 @@ export const testConfig = {
   prodApi: ``,
 
   username: process.env.USER_NAME || `admin`,
-  password: process.env.PASSWORD || `1234`,
+  password: process.env.PASSWORD || `admin`,
 
   waitForElement: process.env.WAIT_FOR_ELEMENT ? parseInt(process.env.WAIT_FOR_ELEMENT) : 10000,
 

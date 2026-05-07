@@ -1,9 +1,11 @@
 import { Page } from '@playwright/test';
 import { WebActions } from '../utils/WebActions';
+import { testConfig } from '../testConfig';
 
 export abstract class BasePage {
   protected readonly page: Page;
   protected readonly actions: WebActions;
+  protected readonly config = testConfig;
 
   constructor(page: Page) {
     this.page = page;
