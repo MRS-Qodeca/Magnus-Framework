@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { LoginPage } from '../pages/loginPage';
+import { LoginPage } from '../pages/LoginPage';
 // Tu będziesz importować kolejne strony w miarę ich tworzenia / Here you will import additional pages as you create them
 
 // Definiujemy typy dla naszych fixtures / Define types for our fixtures

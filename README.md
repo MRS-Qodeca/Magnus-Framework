@@ -46,20 +46,20 @@ Serce wzorca POM (Page Object Model). Tutaj mapujemy interfejs aplikacji na kod.
 
 Skrzynka z narzędziami zwiększającymi stabilność i możliwości frameworka.
 
-- **`WebActions.ts`**: Silnik operacyjny frameworka. Rozszerza standardowe akcje Playwrighta o:
-    - **Smart Clicks**: Obsługa kliknięć przez tekst oraz "awaryjnych" kliknięć przez JS.
-    - **File Management**: Wbudowane metody do odczytu/zapisu plików tekstowych.
-    - **Advanced Data Verification**: Natywne wsparcie dla wyciągania treści z plików PDF oraz danych z arkuszy Excel (.xlsx).
+- **`WebActions.ts`**: Silnik operacyjny frameworka. Rozszerza standardowe akcje w kontekście przeglądarki o dodatkowe metody, w tym:
+  - **Smart Clicks**: Obsługa kliknięć przez tekst oraz "awaryjnych" kliknięć przez JS.
+  - **File Management**: Wbudowane metody do odczytu/zapisu plików tekstowych.
+  - **Advanced Data Verification**: Natywne wsparcie dla wyciągania treści z plików PDF oraz danych z arkuszy Excel (.xlsx).
 - **`testConfig.ts`**: Zarządzanie środowiskami (DEV/STAGE/PROD) oraz danymi wrażliwymi poprzez pliki `.env`.
-- **`PDFUtil.ts` / `ExcelUtil.ts`** – Zaawansowana weryfikacja oraz odczyt plików nie-webowych.
+- **`PDFUtil.ts` / `ExcelUtil.ts`** – Zaawansowana weryfikacja oraz odczyt plików nie-webowych (zintegrowane z WebActions).
 - **`MailUtil.ts`**: Moduł przygotowany do obsługi poczty elektronicznej (np. przechwytywanie kodów MFA, linków aktywacyjnych). Wspiera integrację z profesjonalnymi API (Mailosaur) oraz darmowymi protokołami (IMAP).
-- **`DatabaseUtil.ts`**: Uniwersalny moduł typu *Plug & Play* do komunikacji z bazami SQL.
-    - **Wsparcie Multi-Database**: Gotowa konfiguracja dla **PostgreSQL** oraz **MySQL** (wymaga jedynie odkomentowania odpowiedniego sterownika).
-    - **Rozszerzalność**: Architektura pozwala na łatwe dodanie wsparcia dla MS SQL Server, Oracle czy SQLite.
-    - **Zaawansowane Akcje**: Poza surowymi zapytaniami, oferuje gotowe metody do:
-        - `isRecordPresent`: Szybka weryfikacja istnienia danych.
-        - `getSingleValue`: Pobieranie konkretnych identyfikatorów (np. ID zamówienia).
-        - `truncateTable`: Automatyczne czyszczenie środowiska przed/po testach.
+- **`DBUtil.ts`**: Uniwersalny moduł typu _Plug & Play_ do komunikacji z bazami SQL.
+  - **Wsparcie Multi-Database**: Gotowa konfiguracja dla **PostgreSQL** oraz **MySQL** (wymaga jedynie odkomentowania odpowiedniego sterownika).
+  - **Rozszerzalność**: Architektura pozwala na łatwe dodanie wsparcia dla MS SQL Server, Oracle czy SQLite.
+  - **Zaawansowane Akcje**: Poza surowymi zapytaniami, oferuje gotowe metody do:
+    - `isRecordPresent`: Szybka weryfikacja istnienia danych.
+    - `getSingleValue`: Pobieranie konkretnych identyfikatorów (np. ID zamówienia).
+    - `truncateTable`: Automatyczne czyszczenie środowiska przed/po testach.
 
 ---
 
@@ -100,17 +100,23 @@ Framework wymusza najwyższą jakość kodu dzięki automatycznym mechanizmom ko
 Framework wykorzystuje bezpieczny i elastyczny system zarządzania danymi testowymi, oddzielając logikę testów od parametrów środowiskowych.
 
 ### 🔐 Plik `.env` (Sekrety i Zmienne)
+
 Wszystkie dane wrażliwe oraz parametry zależne od środowiska przechowywane są w pliku `.env` w głównym katalogu projektu. Plik ten jest ignorowany przez Git, co gwarantuje bezpieczeństwo haseł i kluczy API.
+
 - **Dynamiczne adresy URL:** Możliwość szybkiego przełączania między środowiskami (QA, DEV).
 - **Zmienne czasowe:** Centralne sterowanie czasem oczekiwania (`WAIT_FOR_ELEMENT`).
 
 ### 📄 Szablon Konfiguracji (`.env.example`)
-W repozytorium znajduje się plik `.env.example`, który służy jako wzorzec struktury zmiennych. 
+
+W repozytorium znajduje się plik `.env.example`, który służy jako wzorzec struktury zmiennych.
+
 - **Zastosowanie:** Dokumentuje on wszystkie wymagane klucze konfiguracji bez ujawniania rzeczywistych danych (haseł, prywatnych URL-i).
 - **Instrukcja:** Aby uruchomić framework, skopiuj ten plik, zmień jego nazwę na `.env` i uzupełnij wartości zgodnie z Twoim środowiskiem testowym.
 
 ### 🧩 `testConfig.ts` (Twój Kontroler)
+
 Plik `src/utils/testConfig.ts` działa jako inteligentny łącznik. Odczytuje on wartości z `.env` za pomocą biblioteki `dotenv` i udostępnia je reszcie frameworka w sposób ustrukturyzowany:
+
 - **Typowanie:** Konwertuje tekstowe dane z `.env` na liczby lub typy logiczne (np. `parseInt` dla timeoutów).
 - **Bezpieczniki (Fail-safes):** Definiuje wartości domyślne, dzięki którym testy nie zostaną przerwane nawet w przypadku braku pojedynczej zmiennej w pliku `.env`.
 
@@ -121,11 +127,13 @@ Plik `src/utils/testConfig.ts` działa jako inteligentny łącznik. Odczytuje on
 Framework integruje się z **Allure Report**, dostarczając szczegółowe, wizualne raporty z przebiegu testów.
 
 ### ⚙️ Funkcje raportu:
-* **Automatyczne Artefakty**: Screenshoty i nagrania wideo są dołączane automatycznie do raportu w przypadku błędu (`on-failure`).
-* **Trace Viewer**: Integracja z Playwright Trace Viewer pozwala na analizę krok po kroku na osi czasu.
-* **Kategoryzacja**: Możliwość tagowania testów (Severity, Feature, Story) dla lepszej przejrzystości.
+
+- **Automatyczne Artefakty**: Screenshoty i nagrania wideo są dołączane automatycznie do raportu w przypadku błędu (`on-failure`).
+- **Trace Viewer**: Integracja z Playwright Trace Viewer pozwala na analizę krok po kroku na osi czasu.
+- **Kategoryzacja**: Możliwość tagowania testów (Severity, Feature, Story) dla lepszej przejrzystości.
 
 ### 🚀 Jak przeglądać raporty?
+
 Po zakończeniu testów wykonaj poniższą komendę, aby wygenerować i otworzyć interaktywny raport w przeglądarce:
 npx allure serve allure-results
 
@@ -136,10 +144,12 @@ npx allure serve allure-results
 Framework posiada zintegrowany silnik **Axe-core**, który pozwala na automatyczną weryfikację zgodności aplikacji ze standardami **WCAG** (Web Content Accessibility Guidelines).
 
 ### 🔍 Co jest sprawdzane?
-* Poprawność hierarchii nagłówków (H1-H6).
-* Kontrast kolorów tekstu względem tła.
-* Obecność atrybutów `alt` dla obrazów.
-* Dostępność elementów dla czytników ekranu i nawigacji klawiaturą.
+
+- Poprawność hierarchii nagłówków (H1-H6).
+- Kontrast kolorów tekstu względem tła.
+- Obecność atrybutów `alt` dla obrazów.
+- Dostępność elementów dla czytników ekranu i nawigacji klawiaturą.
 
 ### 🛠️ Przykład użycia:
+
 Audyt można uruchomić na dowolnym etapie testu (np. po otwarciu modala lub przejściu do koszyka), co pozwala na wyłapanie błędów dostępności w dynamicznych elementach UI.

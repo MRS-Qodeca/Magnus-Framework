@@ -1,16 +1,40 @@
 import { BasePage } from '../BasePage';
 
 export class LoginPage extends BasePage {
-  // Selektor tekstowy dla komunikatu o sukcesie
-  private readonly successMessageLocator = 'p';
+  private readonly successMessageLocator = 'p'; //Komunikat sukcesu jako <p> / Success message as <p>
+  private readonly headerLocator = 'h3'; // Nagłówek strony jako <h3> / Page header as <h3>
 
-  async navigateToBasicAuth() {
-    // Playwright sam doklei baseURL z configa i poda dane logowania
-    await this.page.goto('/basic_auth');
+  /**
+   * Nawigacja do strony logowania - dziedziczone z navigate w BasePAge. /
+   * Navigate to the login page - inherited from navigate in BasePage.
+   */
+  async open() {
+    await this.navigate('/basic_auth'); // Strona logowania to wybrana ścieżka. / The login page is this specific path.
   }
 
-  async getSuccessText(): Promise<string | null> {
-    // Pobieramy tekst z akapitu
-    return await this.page.textContent(this.successMessageLocator);
+  /**
+   * Wykonuje logowanie z użyciem danych z configu. /
+   * Performs login using credentials from the config.
+   */
+  async login() {
+    await this.actions.enterValue('#username', this.config.username);
+    await this.actions.enterValue('#password', this.config.password);
+    await this.actions.clickElement('#login-button');
+  }
+
+  /**
+   * Pobiera tekst komunikatu sukcesu (WebActions). /
+   * Retrieves the text of the success message (WebActions).
+   */
+  async getSuccessText() {
+    return await this.actions.getElementText(this.successMessageLocator);
+  }
+
+  /**
+   * Pobiera tekst nagłówka strony (WebActions). /
+   * Retrieves the text of the page header (WebActions).
+   */
+  async getHeaderText(): Promise<string | null> {
+    return await this.actions.getElementText(this.headerLocator);
   }
 }

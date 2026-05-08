@@ -12,6 +12,8 @@ export abstract class BasePage {
     this.actions = new WebActions(this.page);
   }
 
+  // --- Ogólne metody i funkcje pomocnicze dla wszystkich stron / General methods and helper functions for all pages ---//
+
   /**
    * Czeka na pełne załadowanie strony (brak aktywności sieciowej). /
    * Waits for the page to be fully loaded (no network activity).
@@ -41,7 +43,27 @@ export abstract class BasePage {
    * Performs a "soft" assertion on the page URL (optional but useful).
    */
   async verifyUrl(expectedUrl: string | RegExp): Promise<void> {
-    const { expect } = require('@playwright/test'); // Import lokalny, by uniknąć problemów z cyklicznością / Local import to avoid circular dependency issues
+    const { expect } = require('@playwright/test');
     await expect(this.page).toHaveURL(expectedUrl);
+  }
+
+  /**
+   *
+   * Automatyczna nawigacja do wybranego patha. Domyslnie przechodzi do root. /
+   * Automatic navigation to a selected path. Defaults to root.
+   * */
+  async navigate(path: string = '') {
+    await this.page.goto(path);
+  }
+
+  /**
+   *
+   * Czyści pole przed wpisaniem tekstu. /
+   * Clears the field before entering text.
+   */
+  protected async fill(selector: string, value: string) {
+    const locator = this.page.locator(selector);
+    await locator.fill('');
+    await locator.fill(value);
   }
 }

@@ -34,7 +34,10 @@ export class WebActions {
    * Enters text into a form field.
    */
   async enterValue(locator: string, value: string): Promise<void> {
-    await this.page.fill(locator, value);
+    const element = this.page.locator(locator);
+    await element.waitFor({ state: 'visible' });
+    await element.fill('');
+    await element.fill(value);
   }
 
   /**
@@ -42,7 +45,19 @@ export class WebActions {
    * Clicks on an element defined by the locator.
    */
   async clickElement(locator: string): Promise<void> {
-    await this.page.click(locator);
+    const element = this.page.locator(locator);
+    await element.waitFor({ state: 'visible' });
+    await element.click();
+  }
+
+  /**
+   * Pobiera tekst z dowolnego elementu. /
+   * Retrieves text from any element.
+   */
+  async getElementText(locator: string): Promise<string | null> {
+    const element = this.page.locator(locator);
+    await element.waitFor({ state: 'visible' });
+    return await element.textContent();
   }
 
   /**

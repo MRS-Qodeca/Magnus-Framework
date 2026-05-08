@@ -25,8 +25,8 @@ export default defineConfig({
   // Using both standard test files and generated files from features
   testDir: './',
   testMatch: [
-    'tests/specs/**/*.spec.ts', // Twoje zwykłe testy (jak successful-login)
-    '.features-gen/**/*.ts', // Testy wygenerowane z Gherkina
+    'tests/specs/**/*.spec.ts', // Standard test files
+    '.features-gen/**/*.ts', // Generated test files from features
   ],
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
