@@ -2,7 +2,11 @@
   "name": "mrs-boilerplate",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+  "allure:clear": "rm -rf allure-results allure-report test-results",
+  "test": "npm run allure:clear && npx playwright test",
+  "allure:report": "npx allure serve allure-results"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

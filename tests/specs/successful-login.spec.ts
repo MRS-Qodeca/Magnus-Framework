@@ -1,4 +1,4 @@
-import { test, expect } from '../../src/pageObjects/fixtures/pageFixture';
+import { test, expect } from '../../src/pageObjects/fixtures/appFixture';
 
 test.describe('Login Functionality @smoke @login', () => {
   /**

@@ -8,7 +8,7 @@ type MyFixtures = {
 };
 
 // Rozszerzamy bazowy test o nasze obiekty / Extend the base test with our page objects
-export const test = base.extend<MyFixtures>({
+export const pageFixture = base.extend<MyFixtures>({
   loginPage: async ({ page }, use) => {
     // Tworzymy nową instancję, przekazując samo 'page' (nasz BasePage i WebActions zajmą się resztą) / We create a new instance, passing just the 'page' (our BasePage and WebActions will handle the rest)
     const loginPage = new LoginPage(page);
