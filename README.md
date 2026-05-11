@@ -1,4 +1,4 @@
-# 🚀 # 🛡️ MAGNUS: The Ultimate Automation Engine
+# 🛡️ MAGNUS: The Test Automation Engine
 
 > "Magnus" (łac. Wielki) – profesjonalny boilerplate oparty na Playwright,
 > zaprojektowany z myślą o pancernej stabilności i nieograniczonej skalowalności.
@@ -181,7 +181,7 @@ _Odwzorowanie aplikacji i automatyzacja wstrzykiwania zależności._
 **| Plik | Odpowiedzialność | Działa na... |**
 | `pageFixture.ts` | Fabryka instancji Stron (np. `loginPage`). | Klasy dziedziczące po `BasePage`. |
 | `componentFixture.ts` | Fabryka instancji Komponentów (np. `navBar`). | Klasy dziedziczące po `BasePageComponent`. |
-| `appFixture.ts` | **Centrum Dowodzenia.** Łączy wszystkie fixtury. | `mergeTests` (punkt wejścia dla testów). |
+| `appFixture.ts` | Centrum Dowodzenia. Łączy wszystkie fixtury i dodatkowo zarządza tagami Allure. | `mergeTests` (punkt wejścia dla testów). |
 
 ### 🏗️ 5. Warstwa Implementacji (Concrete POM)
 
@@ -236,3 +236,40 @@ Framework posiada zintegrowany silnik **Axe-core**, który pozwala na automatycz
 ### 🛠️ Przykład użycia:
 
 Audyt można uruchomić na dowolnym etapie testu (np. po otwarciu modala lub przejściu do koszyka), co pozwala na wyłapanie błędów dostępności w dynamicznych elementach UI.
+
+Work in progress:
+
+# 🛡️ MAGNUS: Instrukcja Szybkiego Startu
+
+Ta instrukcja została zaprojektowana tak, aby umożliwić uruchomienie frameworka w 5 minut, niezależnie od poziomu zaawansowania użytkownika.
+
+---
+
+## 📋 1. Wymagania wstępne
+
+Zanim zaczniesz, upewnij się, że na Twoim komputerze zainstalowane są:
+
+- **Node.js** (zalecana wersja LTS) – [Pobierz tutaj](https://nodejs.org/)
+- **VS Code** (edytor tekstu) – [Pobierz tutaj](https://code.visualstudio.com/)
+- **Git** – [Pobierz tutaj](https://git-scm.com/)
+
+---
+
+## 📥 2. Instalacja krok po kroku
+
+Otwórz terminal (lub konsolę w VS Code) i wykonaj poniższe komendy jedna po drugiej:
+
+1. **Pobierz projekt na dysk:**
+
+   ```bash
+   git clone [https://github.com/MRS-Qodeca/Magnus-Framework.git](https://github.com/MRS-Qodeca/Magnus-Framework.git)
+
+   ```
+
+2. **Wejdź do fodleru projektu:**
+
+```bash
+cd Magnus-Framework
+
+3. **Zainstaluj biblioteki:**
+```

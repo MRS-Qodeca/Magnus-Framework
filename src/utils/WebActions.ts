@@ -1,8 +1,8 @@
-/* Metoda użycia: aby w testach wykorzystać funkcje z tej klasy, należy stworzyć jej instancję, przekazując aktualną stronę i kontekst przeglądarki, np. this.webActions.getPDFText(kontekst strony) /
-   Usage method: to use the functions from this class in tests, you need to create an instance of it, passing the current page and browser context, e.g., this.webActions.getPDFText(browserContext) */
+/* Metoda użycia: aby w testach wykorzystać funkcje z tej klasy, należy stworzyć jej instancję, przekazując aktualną stronę i kontekst przeglądarki, np. this.actions.getPDFText(kontekst strony) /
+   Usage method: to use the functions from this class in tests, you need to create an instance of it, passing the current page and browser context, e.g., this.actions.getPDFText(browserContext) */
 
 import fs from 'fs';
-import type { Page } from '@playwright/test';
+import type { Page, Locator } from '@playwright/test';
 import { BrowserContext } from '@playwright/test';
 import { Workbook } from 'exceljs';
 import { testConfig } from '../testConfig';
@@ -20,16 +20,6 @@ export class WebActions {
   }
 
   /**
-   * Wstrzymuje wykonanie testu na określoną liczbę milisekund (używać tylko w ostateczności). /
-   * Pauses the test execution for a specified number of milliseconds (use only as a last resort).
-   */
-  async delay(time: number): Promise<void> {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, time);
-    });
-  }
-
-  /**
    * Wpisuje tekst w pole formularza. /
    * Enters text into a form field.
    */
@@ -44,10 +34,12 @@ export class WebActions {
    * Klika w element zdefiniowany przez lokator. /
    * Clicks on an element defined by the locator.
    */
-  async clickElement(locator: string): Promise<void> {
-    const element = this.page.locator(locator);
-    await element.waitFor({ state: 'visible' });
-    await element.click();
+  async clickElement(element: string | Locator): Promise<void> {
+    if (typeof element === 'string') {
+      await this.page.click(element);
+    } else {
+      await element.click();
+    }
   }
 
   /**
@@ -74,6 +66,36 @@ export class WebActions {
    */
   async clickElementJS(locator: string): Promise<void> {
     await this.page.$eval(locator, (element: HTMLElement) => element.click());
+  }
+
+  /**
+   * Wpisuje tekst w określony element (input, textarea).
+   * Metoda najpierw czyści pole, a następnie wprowadza nową wartość.
+   * Wspiera zarówno selektory tekstowe (string), jak i gotowe obiekty Locator.
+   * * @param element - Selektor string lub Locator Playwrighta
+   * @param value - Tekst, który ma zostać wpisany /
+   * Enters text into a specified element (input, textarea).
+   * The method first clears the field and then inputs the new value.
+   * Supports both string selectors and ready-made Locator objects.
+   * @param element - String selector or Playwright Locator
+   * @param value - Text to be entered
+   */
+  async typeElement(element: string | Locator, value: string): Promise<void> {
+    if (typeof element === 'string') {
+      await this.page.fill(element, value);
+    } else {
+      await element.fill(value);
+    }
+  }
+
+  /**
+   * Wstrzymuje wykonanie testu na określoną liczbę milisekund (używać tylko w ostateczności). /
+   * Pauses the test execution for a specified number of milliseconds (use only as a last resort).
+   */
+  async delay(time: number): Promise<void> {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, time);
+    });
   }
 
   /**

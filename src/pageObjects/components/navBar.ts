@@ -1,5 +1,4 @@
-// src/pageObjects/components/NavBar.ts
-import { BasePageComponent } from '../BasePageComponent';
+import { BasePageComponent } from '../basePageComponent';
 import { Page } from '@playwright/test';
 
 // Definiujemy interfejs dla konfiguracji lokatorów

@@ -1,6 +1,5 @@
-// BasePageComponent.ts
 import { Page, Locator } from '@playwright/test';
-import { WebActions } from '.././utils/WebActions';
+import { WebActions } from '../utils/webActions';
 
 export abstract class BasePageComponent {
   protected readonly page: Page;

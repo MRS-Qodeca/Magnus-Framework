@@ -1,12 +1,13 @@
 {
   "name": "magnus-automation-framework",
-  "version": "1.0.0",
+  "version": "1.2.0",
   
   "main": "index.js",
   "scripts": {
   "allure:clear": "rm -rf allure-results allure-report test-results",
   "test": "npm run allure:clear && npx playwright test",
-  "allure:report": "npx allure serve allure-results"
+  "allure:report": "npx allure serve allure-results",
+  "pretest": "taskkill /F /IM chrome.exe /T || exit 0"
 },
   "keywords": ["Playwright", "Automation", "Testing", "Framework"],
   "author": "Marek Robak-Sobolewski",

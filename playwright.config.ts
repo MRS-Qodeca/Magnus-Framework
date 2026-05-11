@@ -22,6 +22,7 @@ const bddDir = defineBddConfig({
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 40000,
   // Using both standard test files and generated files from features
   testDir: './',
   testMatch: [
@@ -52,6 +53,8 @@ export default defineConfig({
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    navigationTimeout: 15000,
+    actionTimeout: 10000,
     baseURL: testConfig.baseURL,
     httpCredentials: {
       username: testConfig.username,
@@ -71,9 +74,6 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        launchOptions: {
-          args: ['--remote-debugging-port=9222'],
-        },
       },
     },
 
@@ -86,6 +86,17 @@ export default defineConfig({
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
+
+    /* Non-functional tests for performance auditing with Lighthouse. */
+    // {
+    //   name: 'lighthouse',
+    //   use: {
+    //     ...devices['Desktop Chrome'],
+    //     launchOptions: {
+    //       args: ['--remote-debugging-port=9222'],
+    //     },
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     // {

@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { WebActions } from '../utils/WebActions';
+import { WebActions } from '../utils/webActions';
 import { testConfig } from '../testConfig';
 
 export abstract class BasePage {
@@ -56,15 +56,5 @@ export abstract class BasePage {
    * */
   async navigate(path: string = '') {
     await this.page.goto(path);
-  }
-
-  /**
-   * Czyści pole przed wpisaniem tekstu. /
-   * Clears the field before entering text.
-   */
-  protected async fill(selector: string, value: string) {
-    const locator = this.page.locator(selector);
-    await locator.fill('');
-    await locator.fill(value);
   }
 }

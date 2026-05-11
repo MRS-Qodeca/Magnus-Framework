@@ -1,4 +1,4 @@
-import { BasePage } from '../BasePage';
+import { BasePage } from '../basePage';
 
 export class LoginPage extends BasePage {
   private readonly successMessageLocator = 'p'; //Komunikat sukcesu jako <p> / Success message as <p>

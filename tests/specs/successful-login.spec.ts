@@ -7,7 +7,6 @@ test.describe('Login Functionality @smoke @login', () => {
    */
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.open();
-    await loginPage.waitForPageLoaded();
   });
 
   test('Login successfully with basic auth', async ({ loginPage }) => {

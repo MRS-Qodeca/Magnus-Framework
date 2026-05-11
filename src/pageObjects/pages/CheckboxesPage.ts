@@ -1,4 +1,4 @@
-import { BasePage } from '../BasePage';
+import { BasePage } from '../basePage';
 
 export class CheckboxesPage extends BasePage {
   private readonly checkbox1 = 'form#checkboxes input >> nth=0';
