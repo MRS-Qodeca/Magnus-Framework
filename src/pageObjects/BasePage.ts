@@ -12,7 +12,10 @@ export abstract class BasePage {
     this.actions = new WebActions(this.page);
   }
 
-  // --- Ogólne metody i funkcje pomocnicze dla wszystkich stron / General methods and helper functions for all pages ---//
+  /**
+   * Ogólne metody i funkcje pomocnicze dla wszystkich stron /
+   * General methods and helper functions for all pages
+   */
 
   /**
    * Czeka na pełne załadowanie strony (brak aktywności sieciowej). /
@@ -48,7 +51,6 @@ export abstract class BasePage {
   }
 
   /**
-   *
    * Automatyczna nawigacja do wybranego patha. Domyslnie przechodzi do root. /
    * Automatic navigation to a selected path. Defaults to root.
    * */
@@ -57,7 +59,6 @@ export abstract class BasePage {
   }
 
   /**
-   *
    * Czyści pole przed wpisaniem tekstu. /
    * Clears the field before entering text.
    */

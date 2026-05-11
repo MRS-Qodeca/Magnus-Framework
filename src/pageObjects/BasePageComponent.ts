@@ -7,12 +7,12 @@ export abstract class BasePageComponent {
   protected readonly root: Locator;
   protected readonly actions: WebActions;
 
-  // KLUCZOWE: Dodaj unię typów 'string | Locator'
+  // Unia typów 'string | Locator' / 'string | Locator' type union
   constructor(page: Page, rootSelector: string | Locator) {
     this.page = page;
     this.actions = new WebActions(this.page);
 
-    // Logika zamiany stringa na Locator
+    // Logika zamiany stringa na Locator / Logic to convert string to Locator
     this.root = typeof rootSelector === 'string' ? page.locator(rootSelector) : rootSelector;
   }
 }

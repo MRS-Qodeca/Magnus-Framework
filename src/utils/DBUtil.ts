@@ -47,9 +47,12 @@ export class DatabaseUtil {
 
     try {
       console.log(`[DB Query] ${query}`);
-      // Dla Postgres używamy client.query, dla MySQL connection.execute / For Postgres we use client.query, for MySQL connection.execute
-      const result = await client.query(query); 
-      return result.rows; 
+      /**
+       * Dla Postgres używamy client.query, dla MySQL connection.execute /
+       * For Postgres we use client.query, for MySQL connection.execute
+       */
+      const result = await client.query(query);
+      return result.rows;
     } catch (error) {
       console.error(`[DB Error] ${error}`);
       throw error;
@@ -62,15 +65,23 @@ export class DatabaseUtil {
    * Sprawdza, czy w danej tabeli istnieje rekord spełniający warunek. / Checks if a record exists in a given table that meets the condition.
    */
   async isRecordPresent(tableName: string, condition: string): Promise<boolean> {
-    const result = await this.executeQuery(`SELECT COUNT(*) as count FROM ${tableName} WHERE ${condition}`);
+    const result = await this.executeQuery(
+      `SELECT COUNT(*) as count FROM ${tableName} WHERE ${condition}`,
+    );
     return parseInt(result[0].count) > 0;
   }
 
   /**
    * Pobiera pojedynczą wartość z konkretnej kolumny. / Fetches a single value from a specific column.
    */
-  async getSingleValue(tableName: string, columnName: string, condition: string): Promise<string | null> {
-    const result = await this.executeQuery(`SELECT ${columnName} FROM ${tableName} WHERE ${condition} LIMIT 1`);
+  async getSingleValue(
+    tableName: string,
+    columnName: string,
+    condition: string,
+  ): Promise<string | null> {
+    const result = await this.executeQuery(
+      `SELECT ${columnName} FROM ${tableName} WHERE ${condition} LIMIT 1`,
+    );
     return result.length > 0 ? result[0][columnName].toString() : null;
   }
 

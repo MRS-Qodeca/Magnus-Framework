@@ -4,10 +4,10 @@ import { Page } from '@playwright/test';
 
 export interface FooterSelectors {
   root: string;
-  columns?: string;        // Selektor dla grup linków
-  legalLinks?: string;     // Selektor dla linków regulaminowych na dole
-  copyrightText?: string;  // Selektor dla tekstu stopki
-  socialLinks?: string;    // Selektor dla ikon social media
+  columns?: string; // Selektor dla grup linków / Selector for link groups
+  legalLinks?: string; // Selektor dla linków regulaminowych na dole / Selector for legal links at the bottom
+  copyrightText?: string; // Selektor dla tekstu stopki / Selector for footer text
+  socialLinks?: string; // Selektor dla ikon social media / Selector for social media icons
 }
 
 export class Footer extends BasePageComponent {

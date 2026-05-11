@@ -1,8 +1,11 @@
-# 🚀 Playwright Hybrid Framework: MRS-Boilerplate
+# 🚀 # 🛡️ MAGNUS: The Ultimate Automation Engine
+
+> "Magnus" (łac. Wielki) – profesjonalny boilerplate oparty na Playwright,
+> zaprojektowany z myślą o pancernej stabilności i nieograniczonej skalowalności.
 
 ## 🌟 I. Wprowadzenie
 
-Witaj w **MRS-Boilerplate** – nowoczesnym, hybrydowym szkielecie do testów automatycznych. Projekt ten powstał z połączenia trzech potężnych podejść do automatyzacji, biorąc z każdego to, co najlepsze:
+Witaj w **Magnus Framework** – nowoczesnym, hybrydowym szkielecie do testów automatycznych. Projekt ten powstał z połączenia trzech potężnych podejść do automatyzacji, biorąc z każdego to, co najlepsze:
 
 - **Struktura i Mechanika (Angelo Loria - https://github.com/angelo-loria/playwright-boilerplate):** Solidny wzorzec POM z wykorzystaniem komponentów i fixtures.
 - **Narzędzia i Stabilność (Akshayp7 - https://github.com/akshayp7/playwright-typescript-playwright-test):** Zaawansowane WebActions, rozbudowane raportowanie w Allure i obsługa plików (PDF/Excel).
@@ -82,11 +85,13 @@ Stosujemy hybrydowy podział testów, oddzielając formę techniczną od prioryt
 W naszych projektach nie stosujemy sztywnego podziału na foldery. Zamiast tego używamy wielowarstwowego systemu **tagów**, co pozwala na precyzyjne sterowanie kolejką testową w CI/CD:
 
 #### 🚀 Poziomy Krytyczności (Business Priority)
+
 - `@smoke` – Błyskawiczny "health check" (czy aplikacja żyje?).
 - `@critical` – Kluczowe procesy biznesowe (Critical Path), których awaria oznacza "stop" dla biznesu.
 - `@regression` – Pełny zakres weryfikacji stabilności systemu.
 
 #### 🛠️ Typy i Warstwy (Testing Type)
+
 - `@ui` – Testy funkcjonalne przeprowadzane przez interfejs użytkownika.
 - `@api` – Testy warstwy integracyjnej i punktów końcowych (szybkie i stabilne).
 - `@visual` – Testy regresji wizualnej (porównywanie screenshotów/pixel-match).
@@ -94,11 +99,13 @@ W naszych projektach nie stosujemy sztywnego podziału na foldery. Zamiast tego 
 - `@security` – Testy pod kątem podatności i uprawnień.
 
 #### 🔍 Perspektywa i Ścieżki (Test Perspective)
+
 - `@functional` – Standardowe funkcje aplikacji (Happy Path) niebędące krytycznymi procesami.
 - `@negative` – Scenariusze negatywne (walidacja błędów, nieprawidłowe dane, brak uprawnień).
 - `@edge-case` – Testy warunków brzegowych i nietypowych zachowań.
 
 #### 🧪 Status i Stabilność
+
 - `@flaky` – Testy o niestabilnych wynikach, które wymagają naprawy (odizolowane od głównego raportu).
 - `@wip` – Testy w trakcie pisania (Work In Progress).
 
@@ -178,7 +185,7 @@ _Odwzorowanie aplikacji i automatyzacja wstrzykiwania zależności._
 
 ### 🏗️ 5. Warstwa Implementacji (Concrete POM)
 
-*Najniższy poziom hierarchii logiki biznesowej – konkretne odwzorowanie UI.*
+_Najniższy poziom hierarchii logiki biznesowej – konkretne odwzorowanie UI._
 
 | Rodzaj | Odpowiedzialność | Przykład użycia |
 | **Page Classes** | Definiowanie lokatorów i metod dla całych stron (E2E). | `LoginPage`, `CheckoutPage.ts`, `AccountPage.ts` |

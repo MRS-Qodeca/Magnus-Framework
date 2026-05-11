@@ -3,7 +3,8 @@ import { pageFixture } from './pageFixture';
 import { componentFixture } from './componentFixture';
 import { allure } from 'allure-playwright';
 
-/** Łączymy pageFixtures i componentFixtures w jeden potężny test /
+/**
+ * Łączymy pageFixtures i componentFixtures w jeden potężny test /
  * We merge pageFixtures and componentFixtures into one powerful test
  */
 export const test = mergeTests(pageFixture, componentFixture);
