@@ -73,13 +73,12 @@ export const componentFixture = base.extend<MyComponentFixtures>({
     await use(new Footer(page, storeFooterConfig));
   },
 
-  // Dropdown - selektor przekazany bezpośrednio (bo jest prosty)
   dropdown: async ({ page }, use) => {
-    await use(new Dropdown(page, { root: 'select#dropdown' }));
+    await use(new Dropdown(page, dropdownConfig));
   },
 
   // CheckboxGroup
   checkboxGroup: async ({ page }, use) => {
-    await use(new CheckboxGroup(page, { root: 'form#checkboxes' }));
+    await use(new CheckboxGroup(page, checkboxGroupConfig));
   },
 });

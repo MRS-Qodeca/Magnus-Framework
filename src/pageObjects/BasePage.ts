@@ -13,8 +13,8 @@ export abstract class BasePage {
   }
 
   /**
-   * Ogólne metody i funkcje pomocnicze dla wszystkich stron /
-   * General methods and helper functions for all pages
+   * --- OGÓLNE METODY I FUNKCJE POMOCNICZE DLA WSZYSTKICH STRON --- /
+   * --- GENERAL METHODS AND HELPER FUNCTIONS FOR ALL PAGES ---
    */
 
   /**
