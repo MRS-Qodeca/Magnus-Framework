@@ -1,17 +1,17 @@
 import { BasePageComponent } from '../basePageComponent';
 import { Page } from '@playwright/test';
 
-// 1. INTERFEJS - Co komponent potrafi (widoczne dla testera w podpowiedziach) / Defining WHAT the component can do (Functional Interface)
+// 1. INTERFEJS FUNKCJONALNY - Co komponent potrafi / Defining WHAT the component can do (Functional Interface)
 export interface IExampleComponent {
   doSomething(value: string): Promise<void>;
   getValue(): Promise<string>;
 }
 
-// 2. Selektory - Adresy elementów wewnątrz komponentu / Configuration data (Selectors)
+// 2. SELEKTORY - Dane konfiguracyjne / Configuration data (Selectors)
 export interface ExampleSelectors {
   root: string; // Zawsze wymagany! / Always required!
-  input?: string; // Opcjonalne - nie każdy komponent musi mieć input / Optional - not every component will have an input
-  button?: string; // Opcjonalne - nie każdy komponent musi mieć button / Optional - not every component will have a button
+  input?: string; // Opcjonalne - nie każdy komponent musi mieć input. / Optional - not every component will have an input.
+  button?: string; // Opcjonalne - nie każdy komponent musi mieć button. / Optional - not every component will have a button.
 }
 
 // 3. KLASA - Implementacja logiki / Defining HOW the component does it (Implementation)
@@ -24,7 +24,7 @@ export class ExampleComponent extends BasePageComponent implements IExampleCompo
   }
 
   async doSomething(value: string): Promise<void> {
-    if (!this.selectors.input) throw new Error('Brak selektora input dla ExampleComponent');
+    if (!this.selectors.input) throw new Error('No input selector defined for ExampleComponent');
     const element = this.root.locator(this.selectors.input);
     await this.actions.typeElement(element, value);
   }

@@ -1,23 +1,31 @@
-// src/pageObjects/fixtures/componentFixture.ts
 import { test as base } from '@playwright/test';
-import { ExampleComponent } from '../components/exampleComponent';
+import { ExampleComponent, ExampleSelectors } from '../components/exampleComponent';
 import { NavBar, NavBarSelectors } from '../components/navBar';
 import { Footer, FooterSelectors } from '../components/footer';
-import { Dropdown } from '../components/dropdown';
+import { Dropdown, DropdownSelectors } from '../components/dropdown';
+import { CheckboxGroup, CheckboxSelectors } from '../components/checkboxGroup';
 
-// 1. ROZSZERZAMY TYPY
+// 1. Rozszerzamy typy o nasze komponenty / We extend the types with our components
 type MyComponentFixtures = {
-  navBar: NavBar;
-  footer: Footer;
   exampleComponent: ExampleComponent;
   exampleOnMainPage: ExampleComponent;
+  navBar: NavBar;
+  footer: Footer;
   dropdown: Dropdown;
+  checkboxGroup: CheckboxGroup;
 };
 
 /**
  * Tu wrzucamy stałe dla konkretnego projektu, np. konfigurację NavBar i Footer /
  * Here we put constants for a specific project, e.g., NavBar and Footer configuration.
  */
+
+const exampleComponentConfig: ExampleSelectors = {
+  root: '.main-container',
+  input: '#user-input',
+  button: '.submit-btn',
+};
+
 const storeNavBarConfig: NavBarSelectors = {
   root: 'nav.flex',
   links: {
@@ -36,20 +44,16 @@ const storeFooterConfig: FooterSelectors = {
   copyrightText: 'p.text-sm',
 };
 
-// 2. IMPLEMENTACJA W BASE.EXTEND
+const dropdownConfig: DropdownSelectors = {
+  root: 'select#dropdown',
+};
+
+const checkboxGroupConfig: CheckboxSelectors = {
+  root: 'form#checkboxes',
+};
+
+// 2. Rozszerzamy bazę o nasze obiekty / We extend the base with our objects
 export const componentFixture = base.extend<MyComponentFixtures>({
-  navBar: async ({ page }, use) => {
-    await use(new NavBar(page, storeNavBarConfig));
-  },
-
-  footer: async ({ page }, use) => {
-    await use(new Footer(page, storeFooterConfig));
-  },
-
-  dropdown: async ({ page }, use) => {
-    await use(new Dropdown(page, { root: 'select#dropdown' }));
-  },
-
   exampleOnMainPage: async ({ page }, use) => {
     const component = new ExampleComponent(page, {
       root: '.main-container',
@@ -57,5 +61,25 @@ export const componentFixture = base.extend<MyComponentFixtures>({
       button: '.submit-btn',
     });
     await use(component);
+  },
+
+  // NavBar - używa stałej powyżej
+  navBar: async ({ page }, use) => {
+    await use(new NavBar(page, storeNavBarConfig));
+  },
+
+  // Footer - używa stałej powyżej
+  footer: async ({ page }, use) => {
+    await use(new Footer(page, storeFooterConfig));
+  },
+
+  // Dropdown - selektor przekazany bezpośrednio (bo jest prosty)
+  dropdown: async ({ page }, use) => {
+    await use(new Dropdown(page, { root: 'select#dropdown' }));
+  },
+
+  // CheckboxGroup
+  checkboxGroup: async ({ page }, use) => {
+    await use(new CheckboxGroup(page, { root: 'form#checkboxes' }));
   },
 });

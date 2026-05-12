@@ -1,64 +1,73 @@
 import { BasePageComponent } from '../basePageComponent';
 import { Page } from '@playwright/test';
 
-// Definiujemy interfejs dla konfiguracji lokatorów
-export interface NavBarSelectors {
-  root: string; // Główny kontener nawigacji
-  links: Record<string, string>; // Mapa linków, np. { home: 'a#logo', cart: '.cart-icon' }
-  searchInput?: string; // Opcjonalny selektor pola wyszukiwania
+// 1. INTERFEJS FUNKCJONALNY - Co komponent potrafi / Defining WHAT the component can do (Functional Interface)
+export interface INavBar {
+  clickLink(linkKey: string): Promise<void>;
+  search(query: string): Promise<void>;
+  isLinkVisible(linkKey: string): Promise<boolean>;
 }
 
-export class NavBar extends BasePageComponent {
+// 2. SELEKTORY - Dane konfiguracyjne / Configuration data (Selectors)
+export interface NavBarSelectors {
+  root: string;
+  links: Record<string, string>; // Mapa klucz -> selektor / Map key -> selector
+  searchInput?: string;
+}
+
+// 3. KLASA - Implementacja logiki / Defining HOW the component does it (Implementation)
+export class NavBar extends BasePageComponent implements INavBar {
   private readonly selectors: NavBarSelectors;
 
   constructor(page: Page, selectors: NavBarSelectors) {
-    // Przekazujemy selectors.root (string) do BasePageComponent.
-    // Dzięki naszej poprawce w klasie bazowej, zostanie on automatycznie zamieniony na Locator.
     super(page, selectors.root);
     this.selectors = selectors;
   }
 
   /**
-   * Klika w link zdefiniowany w mapie links na podstawie klucza.
-   * @param linkKey Klucz z obiektu NavBarSelectors.links (np. 'home' lub 'shirts')
+   * Klika w link zdefiniowany w mapie links na podstawie klucza /
+   * Clicks a link defined in the links map based on the key
    */
   async clickLink(linkKey: string): Promise<void> {
     const selector = this.selectors.links[linkKey];
     if (!selector) {
-      throw new Error(
-        `[Magnus] Link o kluczu "${linkKey}" nie został zdefiniowany w NavBarSelectors!`,
-      );
+      throw new Error(`Link with key "${linkKey}" is not defined in NavBarSelectors!`);
     }
 
-    // Używamy pancernych akcji z BasePageComponent
-    await this.actions.clickElement(selector);
+    const linkLocator = this.root.locator(selector);
+    /**
+     * Używamy WebActions ukrytego w klasie bazowej (this.actions). /
+     * Using WebActions hidden in the base class (this.actions)
+     */
+    await this.actions.clickElement(linkLocator);
   }
 
   /**
-   * Wpisuje frazę w wyszukiwarkę i zatwierdza klawiszem Enter.
-   * @param query Fraza do wyszukania
+   * Wpisuje frazę w wyszukiwarkę i zatwierdza klawiszem Enter. /
+   * Types a query into the search input and submits it with the Enter key.
    */
   async search(query: string): Promise<void> {
     if (!this.selectors.searchInput) {
-      console.warn(
-        '[Magnus] Próba użycia wyszukiwarki, która nie została zdefiniowana w selektorach NavBar.',
+      throw new Error(
+        'Attempting to use search functionality, but search input is not defined in NavBarSelectors.',
       );
-      return;
     }
 
-    // actions.enterValue automatycznie poczeka na widoczność i wyczyści pole
-    await this.actions.enterValue(this.selectors.searchInput, query);
+    const searchField = this.root.locator(this.selectors.searchInput);
+
+    await this.actions.typeElement(searchField, query);
     await this.page.keyboard.press('Enter');
   }
 
   /**
-   * Sprawdza, czy konkretny link jest widoczny wewnątrz Navbaru.
+   * Sprawdza, czy konkretny link jest widoczny wewnątrz Navbaru
+   * Checks if a specific link is visible within the Navbar
    */
   async isLinkVisible(linkKey: string): Promise<boolean> {
     const selector = this.selectors.links[linkKey];
     if (!selector) return false;
 
-    // Szukamy elementu wewnątrz zakresu 'root' naszego komponentu
+    // Szukamy elementu ściśle wewnątrz zakresu 'root'. / We look for the element strictly within the 'root' scope.
     return await this.root.locator(selector).isVisible();
   }
 }
