@@ -1,3 +1,8 @@
+/**
+ * To jest klasa bazowa dla wszystkich komponentów stron w naszym frameworku. Zawiera wspólne właściwości i metody, które mogą być używane przez wszystkie komponenty. /
+ * This is the base class for all page components in our framework. It contains common properties and methods that can be used by all components.
+ */
+
 import { Page, Locator } from '@playwright/test';
 import { WebActions } from '../utils/webActions';
 

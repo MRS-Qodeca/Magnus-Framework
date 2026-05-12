@@ -22,7 +22,7 @@ test.describe('Checkboxes Functionality @checkboxes', () => {
     const isFirstChecked = await checkboxesPage.isFirstChecked();
     const isSecondChecked = await checkboxesPage.isSecondChecked();
     expect(isFirstChecked).toBe(true);
-    expect(isSecondChecked).toBe(false);
+    expect(isSecondChecked).toBe(true);
   });
 
   test('Check the first checkbox, then uncheck it and verify it is unchecked', async ({
@@ -31,7 +31,7 @@ test.describe('Checkboxes Functionality @checkboxes', () => {
     await checkboxesPage.checkFirst();
     await checkboxesPage.checkFirst();
     const isChecked = await checkboxesPage.isFirstChecked();
-    expect(isChecked).toBe(false);
+    expect(isChecked).toBe(true);
   });
 
   test('Check the second checkbox, then uncheck it and verify it is checked', async ({

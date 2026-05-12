@@ -1,16 +1,9 @@
 import { BasePage } from '../basePage';
 
 export class LoginPage extends BasePage {
+  protected readonly path = '/basic_auth'; // Definiujemy ścieżkę do tej strony. / Define the path to this page.
   private readonly successMessageLocator = 'p'; //Komunikat sukcesu jako <p> / Success message as <p>
   private readonly headerLocator = 'h3'; // Nagłówek strony jako <h3> / Page header as <h3>
-
-  /**
-   * Nawigacja do strony logowania - dziedziczone z navigate w BasePAge. /
-   * Navigate to the login page - inherited from navigate in BasePage.
-   */
-  async open() {
-    await this.navigate('/basic_auth'); // Strona logowania to wybrana ścieżka. / The login page is this specific path.
-  }
 
   /**
    * Wykonuje logowanie z użyciem danych z configu. /

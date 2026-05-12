@@ -1,3 +1,8 @@
+/**
+ * To jest klasa bazowa dla wszystkich stron w naszym frameworku. Zawiera wspólne metody i funkcje pomocnicze, które mogą być używane przez wszystkie strony. /
+ * This is the base class for all pages in our framework. It contains common methods and helper functions that can be used by all pages.
+ */
+
 import { Page } from '@playwright/test';
 import { WebActions } from '../utils/webActions';
 import { testConfig } from '../testConfig';
@@ -5,6 +10,7 @@ import { testConfig } from '../testConfig';
 export abstract class BasePage {
   protected readonly page: Page;
   protected readonly actions: WebActions;
+  protected abstract readonly path: string;
   protected readonly config = testConfig;
 
   constructor(page: Page) {
@@ -16,6 +22,23 @@ export abstract class BasePage {
    * --- OGÓLNE METODY I FUNKCJE POMOCNICZE DLA WSZYSTKICH STRON --- /
    * --- GENERAL METHODS AND HELPER FUNCTIONS FOR ALL PAGES ---
    */
+
+  /**
+   * Nawigacja do strony - używa zdefiniowanego patha. /
+   * Navigates to the page using the defined path.
+   */
+  async open() {
+    if (!this.path) throw new Error('This page has no defined path!');
+    await this.navigate(this.path);
+  }
+
+  /**
+   * Automatyczna nawigacja do root. /
+   * Automatic navigation to root.
+   * */
+  async navigate(path: string = '') {
+    await this.page.goto(path);
+  }
 
   /**
    * Czeka na pełne załadowanie strony (brak aktywności sieciowej). /
@@ -48,13 +71,5 @@ export abstract class BasePage {
   async verifyUrl(expectedUrl: string | RegExp): Promise<void> {
     const { expect } = require('@playwright/test');
     await expect(this.page).toHaveURL(expectedUrl);
-  }
-
-  /**
-   * Automatyczna nawigacja do wybranego patha. Domyslnie przechodzi do root. /
-   * Automatic navigation to a selected path. Defaults to root.
-   * */
-  async navigate(path: string = '') {
-    await this.page.goto(path);
   }
 }

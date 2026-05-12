@@ -20,6 +20,16 @@ export class WebActions {
   }
 
   /**
+   * Przechodzi do określonego URL. /
+   * Navigates to a specified URL.
+   * @param url - Adres URL, do którego ma nastąpić nawigacja / The URL to navigate to
+   */
+  async goToUrl(url: string) {
+    // Tutaj możesz dodać stepy Allure, logi, lub specjalne warunki / Here you can add Allure steps, logs, or special conditions
+    await this.page.goto(url, { waitUntil: 'networkidle' });
+  }
+
+  /**
    * Wpisuje tekst w pole formularza. /
    * Enters text into a form field.
    */

@@ -1,26 +1,32 @@
 import { BasePage } from '../basePage';
+import { CheckboxGroup } from '../components/checkboxGroup';
+import { Page } from '@playwright/test';
 
 export class CheckboxesPage extends BasePage {
-  private readonly checkbox1 = 'form#checkboxes input >> nth=0';
-  private readonly checkbox2 = 'form#checkboxes input >> nth=1';
+  protected readonly path = '/checkboxes';
 
-  async open() {
-    await this.navigate('/checkboxes');
+  // Komponent jako publiczny atrybut - pełna kompozycja / Component as a public attribute - full composition
+  public readonly group: CheckboxGroup;
+
+  constructor(page: Page) {
+    super(page);
+    // Inicjalizujemy komponent z rootem 'form#checkboxes' / Initialize the component with the root 'form#checkboxes'
+    this.group = new CheckboxGroup(page, { root: 'form#checkboxes' });
   }
 
   async checkFirst() {
-    await this.actions.clickElement(this.checkbox1);
+    await this.group.checkByIndex(0);
   }
 
   async isFirstChecked(): Promise<boolean> {
-    return await this.page.isChecked(this.checkbox1);
+    return await this.group.isChecked(0);
   }
 
   async checkSecond() {
-    await this.actions.clickElement(this.checkbox2);
+    await this.group.checkByIndex(1);
   }
 
   async isSecondChecked(): Promise<boolean> {
-    return await this.page.isChecked(this.checkbox2);
+    return await this.group.isChecked(1);
   }
 }

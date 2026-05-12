@@ -12,11 +12,13 @@ export interface ICheckboxGroup {
 // 2. SELEKTORY - Dane konfiguracyjne / Configuration data (Selectors)
 export interface CheckboxSelectors {
   root: string; // Kontener otaczający wszystkie checkboxy (np. 'form#checkboxes') / Container that wraps all checkboxes (e.g., 'form#checkboxes')
+  item?: string; // Opcjonalny, jeśli chcielibyśmy zmienić domyślny 'input' / Optional, if we want to change the default 'input[type="checkbox"]'
 }
 
 // 3. KLASA - Implementacja logiki / Defining HOW the component does it (Implementation)
 export class CheckboxGroup extends BasePageComponent implements ICheckboxGroup {
   private readonly selectors: CheckboxSelectors;
+  private readonly defaultItemSelector = 'input[type="checkbox"]';
 
   constructor(page: Page, selectors: CheckboxSelectors) {
     super(page, selectors.root);
@@ -24,16 +26,20 @@ export class CheckboxGroup extends BasePageComponent implements ICheckboxGroup {
   }
 
   /**
+   * Pomocnicza metoda do pobierania konkretnego checkboxa po indeksie. /
+   * Helper method to get a specific checkbox by index.
+   */
+  private getCheckbox(index: number) {
+    const itemSelector = this.selectors.item || this.defaultItemSelector;
+    return this.root.locator(itemSelector).nth(index);
+  }
+
+  /**
    * Zaznacza checkbox na podstawie indeksu (0, 1, 2...). /
    * Checks a checkbox based on its index (0, 1, 2...).
    */
   async checkByIndex(index: number): Promise<void> {
-    const checkbox = this.root.locator('input[type="checkbox"]').nth(index);
-    /**
-     * Używamy natywnej metody check(), która jest "inteligentna" (nie kliknie, jeśli już zaznaczone). /
-     * We use the native check() method, which is "smart" (it won't click if it's already checked).
-     */
-    await checkbox.check();
+    await this.getCheckbox(index).check();
   }
 
   /**
@@ -41,8 +47,7 @@ export class CheckboxGroup extends BasePageComponent implements ICheckboxGroup {
    * Unchecks a checkbox based on its index.
    */
   async uncheckByIndex(index: number): Promise<void> {
-    const checkbox = this.root.locator('input[type="checkbox"]').nth(index);
-    await checkbox.uncheck();
+    await this.getCheckbox(index).uncheck();
   }
 
   /**
@@ -50,7 +55,7 @@ export class CheckboxGroup extends BasePageComponent implements ICheckboxGroup {
    * Returns the checked state (true/false) for a checkbox based on its index.
    */
   async isChecked(index: number): Promise<boolean> {
-    return await this.root.locator('input[type="checkbox"]').nth(index).isChecked();
+    return await this.getCheckbox(index).isChecked();
   }
 
   /**
@@ -58,6 +63,7 @@ export class CheckboxGroup extends BasePageComponent implements ICheckboxGroup {
    * Returns the count of all checkboxes in the group.
    */
   async getCheckboxesCount(): Promise<number> {
-    return await this.root.locator('input[type="checkbox"]').count();
+    const itemSelector = this.selectors.item || this.defaultItemSelector;
+    return await this.root.locator(itemSelector).count();
   }
 }

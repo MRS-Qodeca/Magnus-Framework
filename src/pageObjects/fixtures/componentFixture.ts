@@ -4,6 +4,7 @@ import { NavBar, NavBarSelectors } from '../components/navBar';
 import { Footer, FooterSelectors } from '../components/footer';
 import { Dropdown, DropdownSelectors } from '../components/dropdown';
 import { CheckboxGroup, CheckboxSelectors } from '../components/checkboxGroup';
+import { Button, ButtonSelectors } from '../components/button';
 
 // 1. Rozszerzamy typy o nasze komponenty / We extend the types with our components
 type MyComponentFixtures = {
@@ -13,6 +14,7 @@ type MyComponentFixtures = {
   footer: Footer;
   dropdown: Dropdown;
   checkboxGroup: CheckboxGroup;
+  button: Button;
 };
 
 /**
@@ -52,6 +54,10 @@ const checkboxGroupConfig: CheckboxSelectors = {
   root: 'form#checkboxes',
 };
 
+const buttonConfig: ButtonSelectors = {
+  root: 'button#submit',
+};
+
 // 2. Rozszerzamy bazę o nasze obiekty / We extend the base with our objects
 export const componentFixture = base.extend<MyComponentFixtures>({
   exampleOnMainPage: async ({ page }, use) => {
@@ -80,5 +86,10 @@ export const componentFixture = base.extend<MyComponentFixtures>({
   // CheckboxGroup
   checkboxGroup: async ({ page }, use) => {
     await use(new CheckboxGroup(page, checkboxGroupConfig));
+  },
+
+  // Button
+  button: async ({ page }, use) => {
+    await use(new Button(page, buttonConfig));
   },
 });
