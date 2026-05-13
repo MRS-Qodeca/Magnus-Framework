@@ -1,0 +1,6 @@
+Feature: Functionality
+
+  Scenario: User can do Y with X on Z
+    Given I am on page Z
+    When I do X
+    Then Y happens

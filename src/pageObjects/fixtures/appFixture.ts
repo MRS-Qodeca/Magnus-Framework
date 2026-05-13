@@ -1,33 +1,46 @@
-import { mergeTests } from '@playwright/test';
+import { test as base } from 'playwright-bdd';
 import { pageFixture } from './pageFixture';
 import { componentFixture } from './componentFixture';
 import { allure } from 'allure-playwright';
+import { mergeTests } from '@playwright/test';
 
 /**
- * Łączymy pageFixtures i componentFixtures w jeden potężny test /
- * We merge pageFixtures and componentFixtures into one powerful test
+ * Łączymy pageFixtures i componentFixtures. /
+ * We merge pageFixtures and componentFixtures.
  */
-export const test = mergeTests(pageFixture, componentFixture);
+const combinedPagesAndComponents = mergeTests(pageFixture, componentFixture);
 
 /**
- * Globalny beforeEach, który analizuje tagi z tytułu testu i dodaje je do raportu Allure /
- * Global beforeEach that parses tags from the test title and adds them to the Allure report
+ * Tworzymy finalny obiekt 'test', łącząc bazę z BDD oraz Twoje strony.
+ * We create the final 'test' object by merging the BDD base with your pages.
  */
-test.beforeEach(async ({}, testInfo) => {
-  const tags = testInfo.title.match(/@\w+/g);
+const bddWithPages = mergeTests(base, combinedPagesAndComponents);
 
-  if (tags) {
-    for (const tag of tags) {
-      // Usuwamy '@' i dodajemy jako czysty tag do raportu / We remove '@' and add it as a clean tag to the report
-      const cleanTag = tag.replace('@', '');
-      await allure.tag(cleanTag);
+/**
+ * Rozszerzamy całość o logikę Allure. /
+ * We extend everything with Allure logic.
+ */
+export const test = bddWithPages.extend<{ allureMetadata: void }>({
+  allureMetadata: [
+    async ({}, use, testInfo) => {
+      const tags = testInfo.title.match(/@\w+/g);
 
-      // Opcjonalnie: Specjalne traktowanie dla severity / Optional: Special handling for severity
-      if (['critical', 'blocker', 'minor'].includes(cleanTag)) {
-        await allure.severity(cleanTag as any);
+      if (tags) {
+        for (const tag of tags) {
+          const cleanTag = tag.replace('@', '');
+          await allure.tag(cleanTag);
+
+          if (['critical', 'blocker', 'minor'].includes(cleanTag)) {
+            await allure.severity(cleanTag as any);
+          }
+        }
       }
-    }
-  }
+      // ---------------------
+
+      await use();
+    },
+    { auto: true },
+  ],
 });
 
 export { expect } from '@playwright/test';
