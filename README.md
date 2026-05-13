@@ -135,8 +135,9 @@ W celu uproszczenia pracy z frameworkiem przygotowano dedykowane skrypty w `pack
 
 - `npm run test:desktop` – Kompleksowy test regresyjny na wszystkich desktopowych przeglądarkach (Chrome, Firefox, Safari) dla obu warstw (SPEC + BDD).
 - `npm run test:mobile` – Uruchamia testy responsywności na emulowanych urządzeniach mobilnych (Android/iOS).
-  > **Uwaga:** Projekty mobilne w `playwright.config.ts` są domyślnie zakomentowane, aby zoptymalizować czas wykonywania standardowej kolejki CI/CD. Odkomentuj je w sekcji `projects`, jeśli wymagasz weryfikacji mobilnej.
 - `npm run test:branded` – Weryfikacja na stabilnych wersjach przeglądarek komercyjnych (Google Chrome, Microsoft Edge).
+
+> **⚠️ Uwaga dot. projektów opcjonalnych:** Projekty z grup **Mobile** oraz **Branded** są w `playwright.config.ts` domyślnie zakomentowane. Pozwala to na skrócenie czasu trwania testów w standardowej kolejce CI/CD oraz zapobiega błędom na środowiskach, które nie posiadają zainstalowanych przeglądarek komercyjnych. Aby z nich skorzystać, odkomentuj odpowiednie sekcje w tablicy `projects`.
 
 #### Wykonanie według przeglądarki:
 
@@ -149,11 +150,6 @@ W celu uproszczenia pracy z frameworkiem przygotowano dedykowane skrypty w `pack
 - `npm run test:all` – Pełne wykonanie regresji (wszystkie projekty).
 - `npm run test:ui` – Otwiera interaktywny interfejs Playwright UI Mode.
 - `npm run test:debug` – Uruchamia testy w trybie debugowania (Playwright Inspector).
-
-#### Raportowanie Allure:
-
-- `npm run allure:clear` – Czyści stare wyniki testów.
-- `npm run allure:report` – Generuje i otwiera lokalny serwer z raportem Allure.
 
 > **Pro Tip:** Przed każdym testem skrypt `pretest` automatycznie czyści wiszące procesy przeglądarki Chrome, co zapobiega blokowaniu plików i zwiększa stabilność lokalnych uruchomień.
 
@@ -296,6 +292,11 @@ Framework integruje się z **Allure Report**, dostarczając szczegółowe, wizua
 
 Po zakończeniu testów wykonaj poniższą komendę, aby wygenerować i otworzyć interaktywny raport w przeglądarce:
 `npx allure serve allure-results`
+
+### Gotowe skrypty Allure:
+
+- `npm run allure:clear` – Czyści stare wyniki testów.
+- `npm run allure:report` – Generuje i otwiera lokalny serwer z raportem Allure.
 
 ---
 
