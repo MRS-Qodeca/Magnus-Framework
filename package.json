@@ -1,6 +1,6 @@
 {
   "name": "magnus-automation-framework",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "index.js",
   "scripts": {
     "pretest": "taskkill /F /IM chrome.exe /T || exit 0",
@@ -18,7 +18,8 @@
     "test:all": "npx bddgen && npx playwright test",
     "test:all:headed": "npx bddgen && npx playwright test --headed",
     "test:ui": "npx bddgen && npx playwright test --ui",
-    "test:debug": "npx bddgen && npx playwright test --debug"
+    "test:debug": "npx bddgen && npx playwright test --debug",
+    "test:critical": "npx bddgen && npx playwright test -g \"@critical\""
   },
   "keywords": [
     "Playwright",
