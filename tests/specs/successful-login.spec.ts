@@ -1,12 +1,9 @@
 import { test, expect } from '../../src/pageObjects/fixtures/appFixture';
 
 test.describe('Login Functionality @smoke @login', () => {
-  /**
-   * Na wszelki wypadek beforeEach, jeśli każda asercja wymagałaby odświeżenia strony /
-   * WE use beforeEach, in case each assertion requires refreshing the page
-   */
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.open();
+    // await loginPage.verifyAccessibility('Login Page');
   });
 
   test('Login successfully with basic auth', async ({ loginPage }) => {

@@ -4,6 +4,7 @@ import { expect } from '@playwright/test';
 test.describe('Dropdown Functionality @dropdown', () => {
   test.beforeEach(async ({ dropdownPage }) => {
     await dropdownPage.open();
+    //await dropdownPage.verifyAccessibility('Dropdown Page');
   });
 
   test('Select option by text', async ({ dropdown }) => {

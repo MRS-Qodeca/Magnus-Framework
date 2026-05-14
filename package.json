@@ -1,9 +1,10 @@
 {
   "name": "magnus-automation-framework",
-  "version": "2.0.2",
+  "version": "2.1.1",
   "main": "index.js",
   "scripts": {
     "pretest": "taskkill /F /IM chrome.exe /T || exit 0",
+    "report": "npx playwright show-report",
     "allure:clear": "rimraf allure-results allure-report test-results",
     "allure:report": "npx allure serve allure-results",
     "bdd:gen": "npx bddgen",

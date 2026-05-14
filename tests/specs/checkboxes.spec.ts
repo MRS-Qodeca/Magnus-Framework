@@ -3,6 +3,7 @@ import { test, expect } from '../../src/pageObjects/fixtures/appFixture';
 test.describe('Checkboxes Functionality @checkboxes', () => {
   test.beforeEach(async ({ checkboxesPage }) => {
     await checkboxesPage.open();
+    //await checkboxesPage.verifyAccessibility('Checkboxes Page');
   });
 
   test('Check the first checkbox and verify it is checked', async ({ checkboxesPage }) => {

@@ -19,4 +19,4 @@ Feature: Dropdown Component Verification
     # When The user selects option "Option 1" from the dropdown
     # Then The dropdown selected value should be "Option 1"
     # And The user selects option "Option 2" from the dropdown
-    # Then The dropdown selected value should be "Option 2"
+    #Then The dropdown selected value should be "Option 2"

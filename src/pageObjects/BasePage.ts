@@ -3,9 +3,10 @@
  * This is the base class for all pages in our framework. It contains common methods and helper functions that can be used by all pages.
  */
 
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { WebActions } from '../utils/webActions';
 import { testConfig } from '../testConfig';
+import AxeBuilder from '@axe-core/playwright';
 
 export abstract class BasePage {
   protected readonly page: Page;
@@ -71,5 +72,38 @@ export abstract class BasePage {
   async verifyUrl(expectedUrl: string | RegExp): Promise<void> {
     const { expect } = require('@playwright/test');
     await expect(this.page).toHaveURL(expectedUrl);
+  }
+
+  /**
+   * Wykonuje skanowanie dostępności strony zgodnie ze standardami WCAG.
+   * Metoda uniwersalna dla testów .spec.ts oraz BDD. /
+   * Performs an accessibility scan of the page according to WCAG standards.
+   * Universal method for both .spec.ts and BDD tests.
+   */
+  async verifyAccessibility(contextName: string = 'Current Page'): Promise<void> {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
+
+    /**
+     * Logowanie błędów do konsoli (bardzo przydatne przy debugowaniu lokalnym) /
+     * Logging errors to the console (very useful for local debugging)
+     */
+    if (accessibilityScanResults.violations.length > 0) {
+      console.error(`\n🔎 Accessibility violations found in: ${contextName}`);
+      accessibilityScanResults.violations.forEach((violation) => {
+        console.error(`- [${violation.id}] ${violation.help}`);
+        console.error(`  More info: ${violation.helpUrl}`);
+      });
+    }
+
+    /**
+     * Twarda asercja - jeśli lista naruszeń nie jest pusta, test oblewa. /
+     * Hard assertion - if the list of violations is not empty, the test fails.
+     */
+    expect(
+      accessibilityScanResults.violations,
+      `Accessibility violations found in ${contextName}. See logs for details.`,
+    ).toEqual([]);
   }
 }
