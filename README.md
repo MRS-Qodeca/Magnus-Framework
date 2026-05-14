@@ -322,17 +322,13 @@ Dzięki integracji w `BasePage`, audyt dostępności jest dostępny dla każdego
 
 ---
 
-**--- WORK IN PROGRESS ---**
-
----
-
 # 🛡️ MAGNUS: Instrukcja Szybkiego Startu
 
 Ta instrukcja została zaprojektowana tak, aby umożliwić uruchomienie frameworka w 5 minut, niezależnie od poziomu zaawansowania użytkownika.
 
 ---
 
-## 📋 1. Wymagania wstępne
+## 📋 I. Wymagania wstępne
 
 Zanim zaczniesz, upewnij się, że na Twoim komputerze zainstalowane są:
 
@@ -342,23 +338,60 @@ Zanim zaczniesz, upewnij się, że na Twoim komputerze zainstalowane są:
 
 ---
 
-## 📥 2. Instalacja krok po kroku
+## 📥 II. Instalacja krok po kroku
 
-Otwórz terminal (lub konsolę w VS Code) i wykonaj poniższe komendy jedna po drugiej:
+Podążaj za poniższymi krokami, aby przygotować środowisko Magnus i uruchomić pierwsze testy.
 
-1. **Pobierz projekt na dysk:**
+### 1. Klonowanie repozytorium
 
-   ```bash
-   git clone [https://github.com/MRS-Qodeca/Magnus-Framework.git](https://github.com/MRS-Qodeca/Magnus-Framework.git)
-   ```
+Pobierz projekt na swój dysk lokalny:
+`git clone [https://github.com/MRS-Qodeca/Magnus-Framework.git](https://github.com/MRS-Qodeca/Magnus-Framework.git)`
+Aby przejść do katalogu nowego projektu, wpisz w terminalu:
+`cd Magnus-Framework`
 
-````
+### 2. Instalacja zależności
 
-2. **Wejdź do fodleru projektu:**
+Wykonaj komendę `npm install`. Pobierze ona wszystkie potrzebne paczki i zależności.
 
-```bash
-cd Magnus-Framework
+### 3. Instalacja przeglądarek Playwright
 
-3. **Zainstaluj biblioteki:**
-```
-````
+Pobierz niezbędne silniki przeglądarek (Chromium, Firefox, WebKit):
+`npx playwright install`
+
+### 4. Konfiguracja zmiennych środowiskowych
+
+Framework korzysta z pliku `.env` do przechowywania wrażliwych danych i konfiguracji.
+
+- Zmień nazwę pliku `.env.example` na `.env` w głównym katalogu projektu
+- Wprowadź w nim dane środowiskowe dla docelowego projektu
+
+### 5. Przygotowanie testów BDD (opcjonalnie)
+
+Ponieważ Magnus korzysta z playwright-bdd, przed pierwszym uruchomieniem (lub po każdej zmianie w plikach .feature) należy wygenerować pliki testowe:
+`npm run bdd:gen`
+
+### 6. Uruchamianie testów
+
+Możesz korzystać z predefiniowanych skryptów w `package.json`:
+
+- Wszystkie testy (Spec + BDD): `npm run test:all`
+- Wyłącznie testu typu Spec: `npm run test:specs`
+- Wyłącznie testy typu BDD: `npm run test:bdd`
+- Testy na Chromium: `npm run test:chromium`
+- Tryb UI (Interaktywny): `npm run test:ui`
+- Testy krytyczne (Tag @critical): `npm run test:critical`
+
+Pozostałe skrypty zostały opisane w odpowiedniej sekcji w pliku `package.json`.
+
+### 7. Raporty (opcjonalnie raporty Allure)
+
+Aby wygenerować i otworzyć czytelny raport graficzny po testach:
+
+**Playwright Test Report:**
+
+- Wygenerowanie standardowego raportu Playwright: `npm run report`
+
+**Allure**
+
+- Wyczyszczenie starych wyników: `npm run allure:clear`
+- Wygenerowanie i otwarcie raportu `npm run allure:report`
