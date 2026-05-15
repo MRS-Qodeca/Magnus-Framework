@@ -5,10 +5,10 @@
  * See how we define components as page attributes and initialize them in the constructor.
  */
 
-import { BasePage } from '../basePage';
-import { Button } from '../components/button'; // Importujemy klasę komponentu
+import { BasePage } from '../BasePage';
+import { Button } from '../components/Button'; // Importujemy klasę komponentu
 import { Page } from '@playwright/test';
-import { ExampleComponent } from '../components/exampleComponent';
+import { ExampleComponent } from '../components/ExampleComponent';
 
 export class ExamplePage extends BasePage {
   // Deklarujemy komponenty jako publiczne atrybuty strony. / Declare components as public attributes of the page.

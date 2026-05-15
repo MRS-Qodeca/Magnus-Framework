@@ -1,5 +1,5 @@
-import { BasePage } from '../basePage';
-import { Dropdown } from '../components/dropdown';
+import { BasePage } from '../BasePage';
+import { Dropdown } from '../components/Dropdown';
 import { Page } from '@playwright/test';
 
 export class DropdownPage extends BasePage {

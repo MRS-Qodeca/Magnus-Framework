@@ -4,7 +4,7 @@
  */
 
 import { Page, expect } from '@playwright/test';
-import { WebActions } from '../utils/webActions';
+import { WebActions } from '../utils/WebActions';
 import { testConfig } from '../testConfig';
 import AxeBuilder from '@axe-core/playwright';
 

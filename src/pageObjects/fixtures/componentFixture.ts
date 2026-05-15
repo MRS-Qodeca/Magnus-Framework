@@ -1,10 +1,10 @@
 import { test as base } from '@playwright/test';
-import { ExampleComponent, ExampleSelectors } from '../components/exampleComponent';
-import { NavBar, NavBarSelectors } from '../components/navBar';
-import { Footer, FooterSelectors } from '../components/footer';
-import { Dropdown, DropdownSelectors } from '../components/dropdown';
-import { CheckboxGroup, CheckboxSelectors } from '../components/checkboxGroup';
-import { Button, ButtonSelectors } from '../components/button';
+import { ExampleComponent, ExampleSelectors } from '../components/ExampleComponent';
+import { NavBar, NavBarSelectors } from '../components/NavBar';
+import { Footer, FooterSelectors } from '../components/Footer';
+import { Dropdown, DropdownSelectors } from '../components/Dropdown';
+import { CheckboxGroup, CheckboxSelectors } from '../components/CheckboxGroup';
+import { Button, ButtonSelectors } from '../components/Button';
 
 // 1. Rozszerzamy typy o nasze komponenty / We extend the types with our components
 type MyComponentFixtures = {

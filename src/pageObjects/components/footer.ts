@@ -1,4 +1,4 @@
-import { BasePageComponent } from '../basePageComponent';
+import { BasePageComponent } from '../BasePageComponent';
 import { Page } from '@playwright/test';
 
 // 1. INTERFEJS FUNKCJONALNY - Co komponent potrafi / Defining WHAT the component can do (Functional Interface)

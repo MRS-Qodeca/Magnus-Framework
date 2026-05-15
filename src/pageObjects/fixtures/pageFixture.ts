@@ -1,8 +1,8 @@
 import { test as base } from '@playwright/test';
-import { ExamplePage } from '../pages/examplePage';
-import { LoginPage } from '../pages/loginPage';
-import { CheckboxesPage } from '../pages/checkboxesPage';
-import { DropdownPage } from '../pages/dropdownPage';
+import { ExamplePage } from '../pages/ExamplePage';
+import { LoginPage } from '../pages/LoginPage';
+import { CheckboxesPage } from '../pages/CheckboxesPage';
+import { DropdownPage } from '../pages/DropdownPage';
 // Tu będziemy importować kolejne strony w miarę ich tworzenia / Here we will import additional pages as we create them
 
 // Definiujemy typy dla naszych fixtures / Define types for our fixtures

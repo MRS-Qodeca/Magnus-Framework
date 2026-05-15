@@ -19,7 +19,7 @@ import { Client } from 'pg'; // Dla PostgreSQL / For PostgreSQL
 
 import { testConfig } from '../testConfig';
 
-export class DatabaseUtil {
+export class DBUtil {
   /**
    * Metoda bazowa do wykonywania surowych zapytań SQL. / Base method for executing raw SQL queries.
    */

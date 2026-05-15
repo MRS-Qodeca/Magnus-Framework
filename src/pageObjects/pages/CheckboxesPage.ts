@@ -1,5 +1,5 @@
-import { BasePage } from '../basePage';
-import { CheckboxGroup } from '../components/checkboxGroup';
+import { BasePage } from '../BasePage';
+import { CheckboxGroup } from '../components/CheckboxGroup';
 import { Page } from '@playwright/test';
 
 export class CheckboxesPage extends BasePage {
