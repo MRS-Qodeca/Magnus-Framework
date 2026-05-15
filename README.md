@@ -345,7 +345,7 @@ Podążaj za poniższymi krokami, aby przygotować środowisko Magnus i uruchomi
 ### 1. Klonowanie repozytorium
 
 Pobierz projekt na swój dysk lokalny:
-`git clone [https://github.com/MRS-Qodeca/Magnus-Framework.git](https://github.com/MRS-Qodeca/Magnus-Framework.git)`
+`git clone https://github.com/MRS-Qodeca/Magnus-Framework.git`
 Aby przejść do katalogu nowego projektu, wpisz w terminalu:
 `cd Magnus-Framework`
 

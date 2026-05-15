@@ -1,6 +1,6 @@
 {
   "name": "magnus-automation-framework",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "main": "index.js",
   "scripts": {
     "pretest": "taskkill /F /IM chrome.exe /T || exit 0",
