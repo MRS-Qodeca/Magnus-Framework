@@ -69,12 +69,12 @@ export const componentFixture = base.extend<MyComponentFixtures>({
     await use(component);
   },
 
-  // NavBar - używa stałej powyżej
+  // NavBar
   navBar: async ({ page }, use) => {
     await use(new NavBar(page, storeNavBarConfig));
   },
 
-  // Footer - używa stałej powyżej
+  // Footer
   footer: async ({ page }, use) => {
     await use(new Footer(page, storeFooterConfig));
   },

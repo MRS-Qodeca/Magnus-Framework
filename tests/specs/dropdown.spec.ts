@@ -1,5 +1,4 @@
-import { test } from '../../src/pageObjects/fixtures/appFixture';
-import { expect } from '@playwright/test';
+import { test, expect } from '../../src/pageObjects/fixtures/appFixture';
 
 test.describe('Dropdown Functionality @dropdown', () => {
   test.beforeEach(async ({ dropdownPage }) => {

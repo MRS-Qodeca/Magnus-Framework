@@ -11,8 +11,8 @@ import { mergeTests } from '@playwright/test';
 const combinedPagesAndComponents = mergeTests(pageFixture, componentFixture);
 
 /**
- * Tworzymy finalny obiekt 'test', łącząc bazę z BDD oraz Twoje strony.
- * We create the final 'test' object by merging the BDD base with your pages.
+ * Tworzymy finalny obiekt 'test', łącząc bazę z BDD oraz strony z POM.
+ * We create the final 'test' object by merging the BDD base with POM pages.
  */
 const bddWithPages = mergeTests(base, combinedPagesAndComponents);
 
@@ -35,7 +35,6 @@ export const test = bddWithPages.extend<{ allureMetadata: void }>({
           }
         }
       }
-      // ---------------------
 
       await use();
     },
