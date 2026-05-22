@@ -18,7 +18,11 @@ When('The user selects option {string} from the dropdown', async ({ dropdown }, 
 });
 
 // STEP 3: Then - Weryfikacja / Verification
-Then('The dropdown selected value should be {string}', async ({ dropdown }, expectedOptionName) => {
-  const selectedValue = await dropdown.getSelectedOptionText();
-  expect(selectedValue).toBe(expectedOptionName);
-});
+Then(
+  'The dropdown selected value should be {string}',
+  async ({ dropdown, page }, expectedOptionName) => {
+    const selectedValue = await dropdown.getSelectedOptionText();
+    expect(selectedValue).toBe(expectedOptionName);
+    await page.waitForLoadState('networkidle');
+  },
+);
