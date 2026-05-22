@@ -351,7 +351,7 @@ Aby przejść do katalogu nowego projektu, wpisz w terminalu:
 
 ### 2. Instalacja zależności
 
-Wykonaj komendę `npm install`. Pobierze ona wszystkie potrzebne paczki i zależności.
+Wykonaj komendę `npm ci`. Pobierze ona wszystkie potrzebne paczki i zależności.
 
 ### 3. Instalacja przeglądarek Playwright
 
