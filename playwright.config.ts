@@ -67,6 +67,24 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     testIdAttribute: 'id',
+
+    /* Disable default viewport to use the browser's native size, which can help with pop-ups and permissions. */
+    viewport: null,
+
+    /* Enforce visible mode (Headed) for better debugging and to avoid issues with pop-ups and permissions */
+    // headless: false,
+
+    /* Automatically denies system prompts for notifications and geolocation, which can interfere with tests. */
+    permissions: ['notifications', 'geolocation'],
+
+    contextOptions: {
+      reducedMotion: 'reduce', // Helps stabilize animations on the page
+    },
+
+    launchOptions: {
+      /* Special launch flags for Chromium to suppress pop-ups */
+      args: ['--disable-notifications', '--disable-popup-blocking', '--deny-permission-prompts'],
+    },
   },
 
   /* Configure projects for major browsers and test types */
