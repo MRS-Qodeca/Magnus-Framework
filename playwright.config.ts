@@ -68,8 +68,8 @@ export default defineConfig({
     video: 'retain-on-failure',
     testIdAttribute: 'id',
 
-    /* Disable default viewport to use the browser's native size, which can help with pop-ups and permissions. */
-    viewport: null,
+    /* Viewport configuration to allow tests to run in fullscreen mode, adapting to the actual screen size. */
+    //viewport: { width: 1920, height: 1080 },
 
     /* Enforce visible mode (Headed) for better debugging and to avoid issues with pop-ups and permissions */
     // headless: false,
