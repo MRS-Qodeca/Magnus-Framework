@@ -13,7 +13,83 @@ Witaj w **Magnus Framework** – nowoczesnym, hybrydowym szkielecie do testów a
 
 ---
 
-## 🛠️ II. Dlaczego Fixtures? (Modern Approach)
+## 📋 II: Instrukcja Szybkiego Startu
+
+Ta instrukcja została zaprojektowana tak, aby umożliwić uruchomienie frameworka w 5 minut, niezależnie od poziomu zaawansowania użytkownika.
+
+---
+
+### Wymagania wstępne
+
+Zanim zaczniesz, upewnij się, że na Twoim komputerze zainstalowane są:
+
+- **Node.js** (zalecana wersja LTS) – [Pobierz tutaj](https://nodejs.org/)
+- **VS Code** (edytor tekstu) – [Pobierz tutaj](https://code.visualstudio.com/)
+- **Git** – [Pobierz tutaj](https://git-scm.com/)
+
+---
+
+### Instalacja krok po kroku
+
+Podążaj za poniższymi krokami, aby przygotować środowisko Magnus i uruchomić pierwsze testy.
+
+#### 1. Klonowanie repozytorium
+
+Pobierz projekt na swój dysk lokalny:
+`git clone https://github.com/MRS-Qodeca/Magnus-Framework.git`
+Aby przejść do katalogu nowego projektu, wpisz w terminalu:
+`cd Magnus-Framework`
+
+#### 2. Instalacja zależności
+
+Wykonaj komendę `npm install`. Pobierze ona wszystkie potrzebne paczki i zależności.
+
+#### 3. Instalacja przeglądarek Playwright
+
+Pobierz niezbędne silniki przeglądarek (Chromium, Firefox, WebKit):
+`npx playwright install`
+
+#### 4. Konfiguracja zmiennych środowiskowych
+
+Framework korzysta z pliku `.env` do przechowywania wrażliwych danych i konfiguracji.
+
+- Zmień nazwę pliku `.env.example` na `.env` w głównym katalogu projektu
+- Wprowadź w nim dane środowiskowe dla docelowego projektu
+
+#### 5. Przygotowanie testów BDD (opcjonalnie)
+
+Ponieważ Magnus korzysta z playwright-bdd, przed pierwszym uruchomieniem (lub po każdej zmianie w plikach .feature) należy wygenerować pliki testowe:
+`npm run bdd:gen`
+
+#### 6. Uruchamianie testów
+
+Możesz korzystać z predefiniowanych skryptów w `package.json`:
+
+- Wszystkie testy (Spec + BDD): `npm run test:all`
+- Wyłącznie testu typu Spec: `npm run test:specs`
+- Wyłącznie testy typu BDD: `npm run test:bdd`
+- Testy na Chromium: `npm run test:chromium`
+- Tryb UI (Interaktywny): `npm run test:ui`
+- Testy krytyczne (Tag @critical): `npm run test:critical`
+
+Pozostałe skrypty zostały opisane w odpowiedniej sekcji w pliku `package.json`.
+
+#### 7. Raporty (opcjonalnie raporty Allure)
+
+Aby wygenerować i otworzyć czytelny raport graficzny po testach:
+
+**Playwright Test Report:**
+
+- Wygenerowanie standardowego raportu Playwright: `npm run report`
+
+**Allure**
+
+- Wyczyszczenie starych wyników: `npm run allure:clear`
+- Wygenerowanie i otwarcie raportu `npm run allure:report`
+
+---
+
+## 🛠️ III. Dlaczego Fixtures? (Modern Approach)
 
 Nasz framework rezygnuje z tradycyjnego, manualnego tworzenia obiektów stron w każdym teście na rzecz mechanizmu **Fixtures**.
 
@@ -26,7 +102,7 @@ Nasz framework rezygnuje z tradycyjnego, manualnego tworzenia obiektów stron w 
 
 ---
 
-## 📂 III. Struktura folderu `src`
+## 📂 IV. Struktura folderu `src`
 
 Cała inteligencja frameworka jest odseparowana od samych testów i znajduje się w katalogu `src`.
 
@@ -70,7 +146,7 @@ Skrzynka z narzędziami zwiększającymi stabilność i możliwości frameworka.
 
 ---
 
-## 🥒 IV. Behavior-Driven Development (BDD)
+## 🥒 V. Behavior-Driven Development (BDD)
 
 Magnus wspiera podejście BDD przy użyciu biblioteki `playwright-bdd`. Pozwala to na pisanie scenariuszy testowych w języku naturalnym (Gherkin), przy jednoczesnym zachowaniu pełnej mocy naszych Page Objectów i Fixtur.
 
@@ -98,7 +174,7 @@ Aby uniknąć konfliktów między tradycyjnymi testami `.spec.ts` a generowanymi
 
 ---
 
-## 🧪 V. Organizacja Testów
+## 🧪 VI. Organizacja Testów
 
 Stosujemy hybrydowy podział testów, oddzielając formę techniczną od priorytetu biznesowego:
 
@@ -184,7 +260,7 @@ W naszych projektach nie stosujemy sztywnego podziału na foldery. Zamiast tego 
 
 ---
 
-## ⚙️ VI. Zarządzanie Konfiguracją (`.env` & `testConfig`)
+## ⚙️ VII. Zarządzanie Konfiguracją (`.env` & `testConfig`)
 
 Framework wykorzystuje bezpieczny i elastyczny system zarządzania danymi testowymi, oddzielając logikę testów od parametrów środowiskowych.
 
@@ -211,7 +287,7 @@ Plik `src/utils/testConfig.ts` działa jako inteligentny łącznik. Odczytuje on
 
 ---
 
-## 🏗️ VII. Hierarchia i Architektura Frameworka
+## 🏗️ VIII. Hierarchia i Architektura Frameworka
 
 Poniższe zestawienie opisuje strukturę, odpowiedzialności plików oraz przepływ zależności w naszym boilerplate.
 
@@ -268,7 +344,7 @@ _Najniższy poziom hierarchii logiki biznesowej – konkretne odwzorowanie UI._
 
 ---
 
-## 🛡️ VIII. Quality Gate & Standardy Kodu
+## 🛡️ IX. Quality Gate & Standardy Kodu
 
 Framework wymusza najwyższą jakość kodu dzięki automatycznym mechanizmom kontroli. To nie tylko testy, to czysty kod.
 
@@ -278,7 +354,7 @@ Framework wymusza najwyższą jakość kodu dzięki automatycznym mechanizmom ko
 
 ---
 
-## 📊 IX. Raportowanie (Allure Report)
+## 📊 X. Raportowanie (Allure Report)
 
 Framework integruje się z **Allure Report**, dostarczając szczegółowe, wizualne raporty z przebiegu testów.
 
@@ -300,7 +376,7 @@ Po zakończeniu testów wykonaj poniższą komendę, aby wygenerować i otworzy�
 
 ---
 
-## ♿ X. Testy Dostępności (A11y)
+## ♿ XI. Testy Dostępności (A11y)
 
 Magnus wykorzystuje potężny silnik **Axe-core** (poprzez bibliotekę `@axe-core/playwright`), który jest branżowym standardem w automatyzacji audytów dostępności. Testy te weryfikują, czy aplikacja jest użyteczna dla osób z niepełnosprawnościami, zgodnie z wytycznymi **WCAG 2.1**.
 
@@ -321,77 +397,3 @@ Dzięki integracji w `BasePage`, audyt dostępności jest dostępny dla każdego
 `await dropdownPage.verifyAccessibility('Dropdown Page Audit');`
 
 ---
-
-# 🛡️ MAGNUS: Instrukcja Szybkiego Startu
-
-Ta instrukcja została zaprojektowana tak, aby umożliwić uruchomienie frameworka w 5 minut, niezależnie od poziomu zaawansowania użytkownika.
-
----
-
-## 📋 I. Wymagania wstępne
-
-Zanim zaczniesz, upewnij się, że na Twoim komputerze zainstalowane są:
-
-- **Node.js** (zalecana wersja LTS) – [Pobierz tutaj](https://nodejs.org/)
-- **VS Code** (edytor tekstu) – [Pobierz tutaj](https://code.visualstudio.com/)
-- **Git** – [Pobierz tutaj](https://git-scm.com/)
-
----
-
-## 📥 II. Instalacja krok po kroku
-
-Podążaj za poniższymi krokami, aby przygotować środowisko Magnus i uruchomić pierwsze testy.
-
-### 1. Klonowanie repozytorium
-
-Pobierz projekt na swój dysk lokalny:
-`git clone https://github.com/MRS-Qodeca/Magnus-Framework.git`
-Aby przejść do katalogu nowego projektu, wpisz w terminalu:
-`cd Magnus-Framework`
-
-### 2. Instalacja zależności
-
-Wykonaj komendę `npm install`. Pobierze ona wszystkie potrzebne paczki i zależności.
-
-### 3. Instalacja przeglądarek Playwright
-
-Pobierz niezbędne silniki przeglądarek (Chromium, Firefox, WebKit):
-`npx playwright install`
-
-### 4. Konfiguracja zmiennych środowiskowych
-
-Framework korzysta z pliku `.env` do przechowywania wrażliwych danych i konfiguracji.
-
-- Zmień nazwę pliku `.env.example` na `.env` w głównym katalogu projektu
-- Wprowadź w nim dane środowiskowe dla docelowego projektu
-
-### 5. Przygotowanie testów BDD (opcjonalnie)
-
-Ponieważ Magnus korzysta z playwright-bdd, przed pierwszym uruchomieniem (lub po każdej zmianie w plikach .feature) należy wygenerować pliki testowe:
-`npm run bdd:gen`
-
-### 6. Uruchamianie testów
-
-Możesz korzystać z predefiniowanych skryptów w `package.json`:
-
-- Wszystkie testy (Spec + BDD): `npm run test:all`
-- Wyłącznie testu typu Spec: `npm run test:specs`
-- Wyłącznie testy typu BDD: `npm run test:bdd`
-- Testy na Chromium: `npm run test:chromium`
-- Tryb UI (Interaktywny): `npm run test:ui`
-- Testy krytyczne (Tag @critical): `npm run test:critical`
-
-Pozostałe skrypty zostały opisane w odpowiedniej sekcji w pliku `package.json`.
-
-### 7. Raporty (opcjonalnie raporty Allure)
-
-Aby wygenerować i otworzyć czytelny raport graficzny po testach:
-
-**Playwright Test Report:**
-
-- Wygenerowanie standardowego raportu Playwright: `npm run report`
-
-**Allure**
-
-- Wyczyszczenie starych wyników: `npm run allure:clear`
-- Wygenerowanie i otwarcie raportu `npm run allure:report`
