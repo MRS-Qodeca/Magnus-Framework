@@ -1,8 +1,5 @@
 # 🛡️ MAGNUS: The Test Automation Engine
 
-> "Magnus" (łac. Wielki) – profesjonalny boilerplate oparty na Playwright,
-> zaprojektowany z myślą o pancernej stabilności i nieograniczonej skalowalności.
-
 ## 🌟 I. Wprowadzenie
 
 Witaj w **Magnus Framework** – nowoczesnym, hybrydowym szkielecie do testów automatycznych. Projekt ten powstał z połączenia trzech potężnych podejść do automatyzacji, biorąc z każdego to, co najlepsze:
