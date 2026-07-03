@@ -82,7 +82,7 @@ export class WebActions {
    * Wpisuje tekst w określony element (input, textarea).
    * Metoda najpierw czyści pole, a następnie wprowadza nową wartość.
    * Wspiera zarówno selektory tekstowe (string), jak i gotowe obiekty Locator.
-   * * @param element - Selektor string lub Locator Playwrighta
+   * @param element - Selektor string lub Locator Playwrighta
    * @param value - Tekst, który ma zostać wpisany /
    * Enters text into a specified element (input, textarea).
    * The method first clears the field and then inputs the new value.
@@ -96,6 +96,34 @@ export class WebActions {
     } else {
       await element.fill(value);
     }
+  }
+
+  /**
+   * Klika w element generujący pobieranie i bezpiecznie zapisuje plik w określonym folderze.
+   * Zwraca pełną ścieżkę do zapisanego pliku. /
+   * Clicks on a download-triggering element and safely saves the file in a specified folder.
+   * Returns the full path to the saved file.
+   * @param downloadTriggerElement - Selektor string lub Locator Playwrighta elementu wywołującego pobranie / String selector or Playwright Locator of the download-triggering element
+   * @param saveDirectory - Ścieżka do katalogu, w którym plik ma zostać zapisany / Path to the directory where the file should be saved
+   * @returns Pełna ścieżka do zapisanego pliku / Full path to the saved file
+   */
+  async downloadFile(
+    downloadTriggerElement: string | Locator,
+    saveDirectory: string,
+  ): Promise<string> {
+    const locator =
+      typeof downloadTriggerElement === 'string'
+        ? this.page.locator(downloadTriggerElement)
+        : downloadTriggerElement;
+
+    const downloadPromise = this.page.waitForEvent('download');
+    await locator.click();
+    const download = await downloadPromise;
+
+    const fullPath = `${saveDirectory}/${download.suggestedFilename()}`;
+    await download.saveAs(fullPath);
+
+    return fullPath;
   }
 
   /**
@@ -136,7 +164,7 @@ export class WebActions {
    * Retrieves the entire content from a text file at the given path.
    */
   async readValuesFromTextFile(filePath: string): Promise<string> {
-    return fs.readFileSync(`${filePath}`, `utf-8`);
+    return await fs.readFileSync(`${filePath}`, `utf-8`);
   }
 
   /**
@@ -144,8 +172,7 @@ export class WebActions {
    * Writes the given data to a text file (overwrites existing content).
    */
   async writeDataIntoTextFile(filePath: string, data: string): Promise<void> {
-    fs.writeFile(filePath, data, (error: any) => {
-      // Dodano : any
+    await fs.writeFile(filePath, data, (error: any) => {
       if (error) throw error;
     });
   }
