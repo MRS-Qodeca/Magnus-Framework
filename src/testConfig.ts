@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+if (!process.env.CI) {
+  dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+}
 
 export const testConfig = {
   baseURL: process.env.BASE_URL || ``,
@@ -13,13 +15,27 @@ export const testConfig = {
   devApi: ``,
   prodApi: ``,
 
-  username: process.env.USER_NAME || `admin`,
-  password: process.env.PASSWORD || `admin`,
+  get username() {
+    return process.env.USER_NAME || 'admin';
+  },
+  get password() {
+    return process.env.PASSWORD || 'admin';
+  },
 
-  waitForElement: process.env.WAIT_FOR_ELEMENT ? parseInt(process.env.WAIT_FOR_ELEMENT) : 10000,
+  get bypassToken() {
+    return process.env.BYPASS_TOKEN || '';
+  },
 
-  dbUsername: process.env.DB_USERNAME || ``,
-  dbPassword: process.env.DB_PASSWORD || ``,
+  get waitForElement() {
+    return process.env.WAIT_FOR_ELEMENT ? parseInt(process.env.WAIT_FOR_ELEMENT, 10) : 10000;
+  },
+
+  get dbUsername() {
+    return process.env.DB_USERNAME || '';
+  },
+  get dbPassword() {
+    return process.env.DB_PASSWORD || '';
+  },
   dbServerName: process.env.DB_SERVER_NAME || ``,
   dbPort: process.env.DB_PORT || ``,
   dbName: process.env.DB_NAME || ``,
