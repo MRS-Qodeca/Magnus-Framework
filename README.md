@@ -1,5 +1,422 @@
 # 🛡️ MAGNUS: The Test Automation Engine
 
+> **Language / Język:** [🇬🇧 English Version](#-english-version) | [🇵🇱 Wersja Polska](#-wersja-polska)
+
+<!-- ================================================================= -->
+
+## 🇬🇧 English Version
+
+<!-- ================================================================= -->
+
+## 🌟 I. Introduction
+
+Welcome to **Magnus Framework** – a modern, hybrid test automation skeleton. This project was built by combining three powerful approaches to test automation, taking the best practices from each:
+
+- **Structure & Mechanics (Angelo Loria - https://github.com/angelo-loria/playwright-boilerplate):** A robust POM pattern using components and fixtures.
+- **Utilities & Stability (Akshayp7 - https://github.com/akshayp7/playwright-typescript-playwright-test):** Advanced WebActions, comprehensive Allure reporting, and file handling (PDF/Excel).
+- **Business Communication (Vitalets - https://github.com/vitalets/playwright-bdd):** Full BDD support (Gherkin/Cucumber).
+
+---
+
+## 📋 II. Quick Start Guide
+
+This guide is designed to get the framework up and running in 5 minutes, regardless of your experience level.
+
+---
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your machine:
+
+- **Node.js** (LTS version recommended) – [Download here](https://nodejs.org/)
+- **VS Code** (Code Editor) – [Download here](https://code.visualstudio.com/)
+- **Git** – [Download here](https://git-scm.com/)
+
+---
+
+### Step-by-Step Installation
+
+Follow the steps below to set up the Magnus environment and run your first tests.
+
+#### 1. Clone the repository
+
+Download the project to your local drive:
+`git clone https://github.com/MRS-Qodeca/Magnus-Framework.git`
+
+To navigate to the new project directory, run in your terminal:
+`cd Magnus-Framework`
+
+#### 2. Install dependencies
+
+Run `npm install`. This command will download all required packages and dependencies.
+
+#### 3. Install Playwright browsers
+
+Download the necessary browser engines (Chromium, Firefox, WebKit):
+`npx playwright install`
+
+#### 4. Configure environment variables
+
+The framework uses a `.env` file to store sensitive data and configurations.
+
+- Rename the `.env.example` file to `.env` in the root directory of the project.
+- Enter the environment details specific to your target project.
+
+#### 5. Prepare BDD tests (Optional)
+
+Since Magnus uses `playwright-bdd`, you need to generate test files before running tests for the first time (or after any changes to `.feature` files):
+`npm run bdd:gen`
+
+#### 6. Run tests
+
+You can use predefined scripts in `package.json`:
+
+- All tests (Spec + BDD): `npm run test:all`
+- Spec tests only: `npm run test:specs`
+- BDD tests only: `npm run test:bdd`
+- Tests on Chromium: `npm run test:chromium`
+- UI Mode (Interactive): `npm run test:ui`
+- Critical tests (@critical tag): `npm run test:critical`
+
+Additional scripts are described in the corresponding section of `package.json`.
+
+#### 7. Reports (Optional Allure Reports)
+
+To generate and open a clear graphical report after test execution:
+
+**Playwright Test Report:**
+
+- Generate standard Playwright report: `npm run report`
+
+**Allure Report:**
+
+- Clear old results: `npm run allure:clear`
+- Generate and open report: `npm run allure:report`
+
+---
+
+## 🛠️ III. Why Fixtures? (Modern Approach)
+
+Our framework moves away from traditional, manual page object instantiation in every test, leveraging the **Fixtures** mechanism instead.
+
+**Why is this a game-changer?**
+
+- **Dependency Injection (DI):** No need to write `const loginPage = new LoginPage(page)`. Playwright automatically injects the ready-to-use page object directly into test arguments.
+- **Lazy Initialization:** Page objects are instantiated only when the test actually requests them, saving resources.
+- **Clean Code:** Tests stay concise and focused purely on business logic.
+- **BDD Integration:** Fixtures serve as a natural bridge for Gherkin steps, allowing effortless state sharing across steps.
+
+---
+
+## 📂 IV. `src` Folder Structure
+
+All framework logic is decoupled from the test files and resides inside the `src` directory.
+
+### 🧩 `pageObjects/`
+
+The core of the Page Object Model (POM) pattern. This is where we map the application interface to code.
+
+- **`pages/`**: Classes representing full pages (e.g., `login.page.ts`). Responsible for navigation and primary actions on a specific URL.
+- **`components/`**: Reusable classes representing UI fragments (ranging from simple buttons and checkboxes to complex structures like tables, navigation menus, widgets, or modals). Enables an atomic design approach to Page Objects.
+- **`base.page.ts`**: An abstract class serving as the foundation for every page. Common elements like Header or Footer are assembled here.
+- **`base.pageComponent.ts`**: Base class for all components. Contains a shared constructor and core methods, giving every widget or menu native access to identical tools (e.g., WebActions) without code duplication.
+
+### 🔌 `fixtures/`
+
+The Dependency Injection layer that automates the creation of page and component instances. Thanks to its modular design, the framework allows for rapid test scenario creation without manual object initialization.
+
+- **`pageFixture.ts`**: Page Object instance factory (e.g., `loginPage`). Responsible for defining and supplying specific application pages to tests.
+- **`componentFixture.ts`**: The factory for universal components (e.g., `navBar`, `footer`). Connects reusable class templates with specific selectors/configs for a given application.
+- **`appFixture.ts`**: **The Command Center.** Uses `mergeTests` to combine page and component fixtures into a single powerful `test` object.
+
+> **Important Rule:** In test files (`*.spec.ts`), always import `test` and `expect` from `appFixture.ts`. This grants test arguments immediate access to all defined pages and components (e.g., `async ({ loginPage, navBar }) => { ... }`).
+
+### 🛠️ `utils/`
+
+A toolbox designed to enhance framework stability and capabilities.
+
+- **`WebActions.ts`**: The operational engine of the framework. Extends standard browser context actions with custom methods, including:
+  - **Smart Clicks**: Support for text-based clicks and "fallback" JS clicks.
+  - **File Management**: Built-in methods for reading/writing text files.
+  - **Advanced Data Verification**: Native support for extracting text from PDF files and reading data from Excel spreadsheets (`.xlsx`).
+- **`testConfig.ts`**: Environment management (DEV/STAGE/PROD) and handling of sensitive data via `.env` files.
+- **`PDFUtil.ts` / `ExcelUtil.ts`**: Advanced parsing and verification of non-web files (integrated with WebActions).
+- **`MailUtil.ts`**: Module designed for email handling (e.g., capturing MFA codes, activation links). Supports integration with professional APIs (Mailosaur) as well as free protocols (IMAP).
+- **`DBUtil.ts`**: A universal _Plug & Play_ module for SQL database communication.
+  - **Multi-Database Support**: Pre-configured for **PostgreSQL** and **MySQL** (requires only uncommenting the corresponding driver).
+  - **Extensibility**: Architecture allows easy extension to MS SQL Server, Oracle, or SQLite.
+  - **Advanced Actions**: Beyond raw queries, it offers out-of-the-box methods for:
+    - `isRecordPresent`: Quick data existence checks.
+    - `getSingleValue`: Fetching specific identifiers (e.g., Order ID).
+    - `truncateTable`: Automated environment cleanup before/after tests.
+
+---
+
+## 🥒 V. Behavior-Driven Development (BDD)
+
+Magnus supports the BDD approach via the `playwright-bdd` library. This enables writing test scenarios in plain language (Gherkin) while retaining the full capability of our Page Objects and Fixtures.
+
+### 🏗️ Solution Architecture
+
+To prevent conflicts between traditional `.spec.ts` tests and generated BDD tests, the framework uses **Playwright Projects**.
+
+- **`specs` Project**: Dedicated to technical tests (`tests/specs/*.spec.ts`).
+- **`bdd` Project**: Dedicated to business tests, operating on the `.features-gen` folder.
+
+### 🚦 BDD Test Workflow (Step-by-Step)
+
+1. **Create Scenario**
+   - In `tests/features/`, create a `.feature` file.
+   - Example: `tests/features/login.feature`.
+
+2. **Define Steps (Step Definitions)**
+   - In `tests/steps/`, create a `.steps.ts` file.
+   - **Important:** Always import `test` from `src/pageObjects/fixtures/appFixture` to preserve Allure logging and access to POM.
+   - Example: `import { test } from '../../src/pageObjects/fixtures/appFixture';`
+
+3. **Generate Code (Synchronization)**
+   - Any change in a `.feature` file requires regenerating the hidden `.features-gen` folder:
+     `npx bddgen`
+
+---
+
+## 🧪 VI. Test Organization
+
+We employ a hybrid test division strategy, separating technical execution formats from business priority:
+
+### 📁 File Structure
+
+- `tests/specs/` – **Scripted Tests** – Tests written directly in TypeScript. Main location for E2E, Integration, API, Security, and Performance tests. Allows full use of framework capabilities and the POM pattern.
+- `tests/features/` – **BDD Scenarios** – Plain language descriptions of system behavior (Gherkin), focused on business processes and readable by non-technical stakeholders.
+- `tests/steps/` – **Step Definitions** – Technical implementation of Gherkin steps, bridging business language with Page Object logic.
+
+### 🏗️ Projects (Playwright Projects)
+
+The framework utilizes a project system to isolate test environments and browsers, allowing precise execution of targeted test suites:
+
+- **[SPEC]** – Projects dedicated to technical tests (TypeScript).
+- **[BDD]** – Projects dedicated to business scenarios (Gherkin/Cucumber).
+
+The `playwright.config.ts` configures the following project groups:
+
+1. **Desktop Browsers**: Full support for Chromium (Chrome, Edge), Firefox, and WebKit (Safari).
+2. **Branded Browsers**: Optional verification on commercial distributions (Google Chrome, MS Edge).
+3. **Mobile Emulation**: Mobile device emulation (e.g., iPhone 16, Pixel 5) for responsiveness testing.
+4. **Lighthouse (WIP)**: Performance and accessibility audits (under implementation).
+
+### ⌨️ Execution Scripts (CLI)
+
+To streamline workflows, dedicated scripts are provided in `package.json`. Every BDD script automatically triggers the generator (`bdd:gen`) to keep test code up to date.
+
+#### Execution by Type:
+
+- `npm run test:specs` – Runs all technical tests across 3 main browsers.
+- `npm run test:bdd` – Runs all business scenarios across 3 main browsers.
+
+#### Execution by Platform:
+
+- `npm run test:desktop` – Comprehensive regression suite across all desktop browsers (Chrome, Firefox, Safari) for both layers (SPEC + BDD).
+- `npm run test:mobile` – Runs responsiveness tests on emulated mobile devices (Android/iOS).
+- `npm run test:branded` – Verification on stable builds of commercial browsers (Google Chrome, Microsoft Edge).
+
+> **⚠️ Note on Optional Projects:** Projects in the **Mobile** and **Branded** groups are commented out by default in `playwright.config.ts`. This reduces execution times in standard CI/CD pipelines and avoids errors on environments without commercial browsers installed. To use them, uncomment the relevant entries in the `projects` array.
+
+#### Execution by Browser:
+
+- `npm run test:chromium` – Runs SPEC + BDD suites on Chromium engine only.
+- `npm run test:firefox` – Runs SPEC + BDD suites on Firefox engine only.
+- `npm run test:webkit` – Runs SPEC + BDD suites on Safari engine only.
+
+#### Special Modes:
+
+- `npm run test:all` – Full regression run (all projects).
+- `npm run test:ui` – Opens the interactive Playwright UI Mode.
+- `npm run test:debug` – Runs tests in debug mode (Playwright Inspector).
+
+> **Pro Tip:** Before executing tests, the `pretest` script automatically terminates orphaned Chrome browser processes, preventing file locks and improving local run stability.
+
+### 🏷️ Categorization (Tagging)
+
+We do not rely on rigid folder structures for classification. Instead, we use a multi-tiered **tagging system** for fine-grained control over CI/CD queues:
+
+#### 🚀 Criticality Levels (Business Priority)
+
+- `@smoke` – Fast health check (is the app alive?).
+- `@critical` – Core business flows (Critical Path) where failure blocks business operation.
+- `@regression` – Full system stability verification suite.
+
+#### 🛠️ Types and Layers (Testing Type)
+
+- `@ui` – Functional tests driven through the user interface.
+- `@api` – Integration layer and endpoint tests (fast and stable).
+- `@visual` – Visual regression tests (screenshot comparisons/pixel matching).
+- `@performance` – Performance tests (response times, load).
+- `@security` – Vulnerability and permission testing.
+
+#### 🔍 Perspective and Paths (Test Perspective)
+
+- `@functional` – Standard application features (Happy Path) outside critical paths.
+- `@negative` – Negative scenarios (error validation, invalid data, missing permissions).
+- `@edge-case` – Boundary condition and edge behavior tests.
+
+#### 🧪 Status and Stability
+
+- `@flaky` – Tests with unstable outcomes requiring fixes (isolated from main reports).
+- `@wip` – Tests currently being written (Work In Progress).
+
+---
+
+## ⚙️ VII. Configuration Management (`.env` & `testConfig`)
+
+The framework implements a secure, flexible test data management system that decouples test logic from environment parameters.
+
+### 🔐 `.env` File (Secrets and Variables)
+
+All sensitive data and environment-specific parameters are stored in a `.env` file at the root of the project. This file is ignored by Git to keep passwords and API keys secure.
+
+- **Dynamic URLs:** Quick toggling between environments (QA, DEV).
+- **Time Variables:** Centralized timeout management (`WAIT_FOR_ELEMENT`).
+
+### 📄 Configuration Template (`.env.example`)
+
+A `.env.example` file is included in the repository as a structural template.
+
+- **Purpose:** Documents all required configuration keys without exposing real data (passwords, private URLs).
+- **Instructions:** Copy this file, rename it to `.env`, and populate the values according to your test environment.
+
+### 🧩 `testConfig.ts` (Your Controller)
+
+`src/utils/testConfig.ts` acts as a smart bridge. It reads `.env` values using `dotenv` and exposes them in a structured format across the framework:
+
+- **Type Casting:** Converts text values from `.env` into numbers or booleans (e.g., `parseInt` for timeouts).
+- **Fail-safes:** Defines fallback defaults so missing variables in `.env` do not break test execution.
+
+---
+
+## 🏗️ VIII. Framework Hierarchy & Architecture
+
+The tables below detail the structure, file responsibilities, and dependency flows within our boilerplate.
+
+### ⚙️ 1. Configuration Layer (Data & Environment)
+
+_Determines WHERE and HOW tests are executed._
+
+| File                   | Responsibility                                      | Dependencies (Imports) | Access To...     |
+| :--------------------- | :-------------------------------------------------- | :--------------------- | :--------------- |
+| `.env`                 | Stores credentials, logins, and URLs (uncommitted). | None                   | Operating System |
+| `testConfig.ts`        | Maps `.env` variables to TypeScript object.         | `dotenv`, `path`       | `.env`           |
+| `playwright.config.ts` | Engine setup: timeouts, browsers, reports (Allure). | `testConfig.ts`        | Entire Framework |
+
+---
+
+### 🛠️ 2. Utility Layer (Utils)
+
+_Technical task specialists. The "muscles" of the framework._
+
+| File            | Responsibility                                              | Dependencies                           | Usage                      |
+| :-------------- | :---------------------------------------------------------- | :------------------------------------- | :------------------------- |
+| `WebActions.ts` | Resilient UI actions (click, fill), PDF and Excel handling. | `playwright`, `fs`, `exceljs`, `pdfjs` | Injected into `BasePage`   |
+| `MailUtils.ts`  | Email API integration (capturing links/MFA codes).          | HTTP/API Library                       | Called in tests (Fixtures) |
+| `DbUtils.ts`    | Database communication (SQL/NoSQL).                         | DB Drivers                             | Called in tests (Fixtures) |
+
+---
+
+### 🧱 3. POM Abstraction Layer (Foundation)
+
+_Standards for all page objects and components._
+
+| File                   | Responsibility                                    | Key Features                                         |
+| :--------------------- | :------------------------------------------------ | :--------------------------------------------------- |
+| `BasePage.ts`          | Parent class for Pages. Initializes `WebActions`. | Protected access to `this.page` and `this.actions`.  |
+| `BasePageComponent.ts` | Parent class for Components (e.g., Navbar).       | Operates on `rootLocator` (scoped inside component). |
+
+---
+
+### 🔌 4. Fixture Layer
+
+_Application mapping and automated dependency injection._
+
+| File                  | Responsibility                                                 | Operates On...                         |
+| :-------------------- | :------------------------------------------------------------- | :------------------------------------- |
+| `pageFixture.ts`      | Page Object instance factory (e.g., `loginPage`).              | Classes extending `BasePage`.          |
+| `componentFixture.ts` | Component instance factory (e.g., `navBar`).                   | Classes extending `BasePageComponent`. |
+| `appFixture.ts`       | Command Center. Combines all fixtures and manages Allure tags. | `mergeTests` (Entry point for tests).  |
+
+---
+
+### 🏗️ 5. Implementation Layer (Concrete POM)
+
+_Lowest hierarchy level of business logic – direct UI representation._
+
+| Type                  | Responsibility                                    | Example Usage                                       |
+| :-------------------- | :------------------------------------------------ | :-------------------------------------------------- |
+| **Page Classes**      | Define locators and methods for full pages (E2E). | `LoginPage.ts`, `CheckoutPage.ts`, `AccountPage.ts` |
+| **Component Classes** | Define reusable UI fragments (widgets, menus).    | `NavBar.ts`, `SearchModal.ts`, `ProductCard.ts`     |
+
+> **Flow Rule:** Implementation classes extend Foundation (3), are instantiated in Fixtures (4), and their methods are ultimately invoked inside Tests (`specs`).
+
+---
+
+## 🛡️ IX. Quality Gate & Code Standards
+
+The framework enforces code quality through automated checks to maintain a clean codebase.
+
+- **ESLint v9 (Flat Config):** Configured via `eslint.config.mjs`. Detects syntax issues and enforces Playwright-specific best practices (`eslint-plugin-playwright`) to prevent test flakiness.
+- **Prettier:** Handles code formatting (indentation, semicolons, quotes). Integrated with ESLint (`eslint-config-prettier`) so both tools run in harmony—Prettier controls style while ESLint handles code logic.
+- **Git Discipline:** Proper `.gitignore` setup ensures sensitive data (`.env`) and heavy dependencies (`node_modules`) are excluded from version control.
+
+---
+
+## 📊 X. Reporting (Allure Report)
+
+The framework integrates with **Allure Report** to deliver detailed, visual test execution insights.
+
+### ⚙️ Report Features:
+
+- **Engine Artifacts**: Integrated with Playwright to attach screenshots and video recordings on failure (`on-failure`).
+- **Trace Viewer Analysis**: Includes direct links to trace files that can be downloaded and opened in Trace Viewer for timeline analysis.
+- **Dynamic Categorization**: Automatically maps `@` tags from test names to native Allure metadata (Tags, Severity) for filtering without extra code.
+
+### 🚀 How to View Reports?
+
+After running tests, execute the command below to generate and serve the interactive report in your browser:
+`npx allure serve allure-results`
+
+### Available Allure Scripts:
+
+- `npm run allure:clear` – Clears old test results.
+- `npm run allure:report` – Generates and serves the Allure report locally.
+
+---
+
+## ♿ XI. Accessibility Testing (A11y)
+
+Magnus incorporates the **Axe-core** engine (via `@axe-core/playwright`), an industry standard for automated accessibility auditing. These checks verify compliance with **WCAG 2.1** guidelines.
+
+### 🔍 How It Works
+
+The engine evaluates the live DOM tree, checking accessibility rules without manual scanning steps. In Magnus, audits cover:
+
+- **Standard Compliance:** Checks Level **A** and **AA** tags (`wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`).
+- **Contrast Analysis:** Calculates text-to-background luminance ratios.
+- **Semantic Structure:** Validates HTML5 markup correctness (e.g., checking that buttons use `<button>` tags instead of empty `<div>` elements).
+- **Interactivity:** Verifies interactive controls contain appropriate screen reader labels (`aria-label`, `label`).
+
+### 🛠️ Usage in Projects
+
+Integrated into `BasePage`, accessibility auditing is accessible to every Page Object and can be called inside Spec tests or BDD scenarios.
+
+**Code Example (`.spec.ts`):**
+`await dropdownPage.verifyAccessibility('Dropdown Page Audit');`
+
+<!-- ================================================================= -->
+
+## 🇵🇱 Wersja Polska
+
+<!-- ================================================================= -->
+
+# 🛡️ MAGNUS: The Test Automation Engine
+
 ## 🌟 I. Wprowadzenie
 
 Witaj w **Magnus Framework** – nowoczesnym, hybrydowym szkielecie do testów automatycznych. Projekt ten powstał z połączenia trzech potężnych podejść do automatyzacji, biorąc z każdego to, co najlepsze:
@@ -394,3 +811,5 @@ Dzięki integracji w `BasePage`, audyt dostępności jest dostępny dla każdego
 `await dropdownPage.verifyAccessibility('Dropdown Page Audit');`
 
 ---
+
+/ Magnus: The Test Automation

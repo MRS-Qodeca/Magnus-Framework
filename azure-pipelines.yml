@@ -1,0 +1,49 @@
+trigger:
+  - main # Launch tests after merging code to main branch
+
+pool:
+  vmImage: 'ubuntu-latest' # Choose a free Linux machine from Microsoft
+
+steps:
+  # 1. Install Node.js environment
+  - task: UseNode@1
+    inputs:
+      version: '18.x'
+    displayName: '1. Install Node.js'
+
+  # 2. Install project dependencies and browsers
+  - script: |
+      npm ci
+      npx playwright install --with-deps
+    displayName: '2. Install Magnus and browser dependencies'
+
+  # 3. Optional step for BDD (uncomment if using .feature / Gherkin tests): /
+  # - script: npx bddgen
+  #   displayName: '3. Generate BDD test code'
+
+  # 4. Launch tests with JUnit XML reporting for Azure DevOps
+  - script: |
+      npx playwright test --reporter=junit,line
+    env:
+      PLAYWRIGHT_JUNIT_OUTPUT_NAME: 'results.xml'
+      # If you have variables in .env, you can set them here or through Variable Groups in ADO:
+      # BASE_URL: $(BASE_URL)
+    displayName: '4. Launch Magnus tests (Playwright)'
+    continueOnError: true # Proceed to publish the report even if tests fail
+
+  # 5. Publish results in the "Tests" tab in Azure DevOps
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/results.xml'
+      failTaskOnFailedTests: true
+    displayName: '5. Display results in Azure DevOps'
+
+  # 6. Save HTML report and optional screenshots as an artifact
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+      publishLocation: 'pipeline'
+    condition: always()
+    displayName: '6. Save HTML report'
