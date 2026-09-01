@@ -30,3 +30,26 @@ export class CheckboxesPage extends BasePage {
     return await this.group.isChecked(1);
   }
 }
+
+/*
+ * ALTERNATYWA - jeśli chcemy mieć komponenty jako prywatne atrybuty, możemy zrobić to tak: /
+ * ALTERNATIVE - if we want to have components as private attributes, we can do it like this:
+ */
+
+// import { BasePage } from '../basePage';
+// import { CheckboxGroup } from '../components/CheckboxGroup';
+
+// export class CheckboxesPage extends BasePage {
+//   protected readonly path = '/checkboxes';
+//   public readonly group: CheckboxGroup;
+
+//   async checkFirst() {
+//   await this.group.checkByIndex(0);
+// }
+
+/**
+ * Jest to lepsze rozwiązanie, jeśli komponenty są tylko częścią implementacji strony i nie chcemy, aby były dostępne na zewnątrz.
+ * Sprawdza się również lepiej, jeśli testujemy małe strony, dla których nie warto tworzyć osobnych klas komponentów. /
+ * This is a better solution if the components are just part of the page implementation and we don't want them to be accessible from outside.
+ * It also works better when testing small pages for which it's not worth creating separate component classes.
+ */

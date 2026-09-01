@@ -11,3 +11,4 @@ export class DropdownPage extends BasePage {
     this.dropdown = new Dropdown(page, { root: 'select#dropdown' });
   }
 }
+
